@@ -1,6 +1,7 @@
-import { useState } from "react"
-
-import { createUser } from './api'
+import { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { createUser, getToken } from './api'
+import { AuthContext } from "./context"
 
 
 const CreateNewUser = () => {
@@ -8,13 +9,18 @@ const CreateNewUser = () => {
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const navigate = useNavigate()
+  const { auth } = useContext(AuthContext)
 
   const submit = () => {
     createUser({ username, password, firstName, lastName })
-    setUsername("")
-    setPassword("")
-    setFirstName("")
-    setLastName("")
+    .then ((response) => {
+      getToken({ auth, username, password })
+      .then ((response) => {
+        navigate("/")
+     })
+    })
+    
     }
   
 

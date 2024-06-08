@@ -4,7 +4,7 @@ import axios from 'axios'
 export const baseUrl = "http://127.0.0.1:8000"
 
 export const createUser = ({ username, password, firstName, lastName }) => {
-    axios({
+    return axios({
       method: 'post',
       url: `${baseUrl}/create-user/`, 
       data: {
@@ -15,6 +15,7 @@ export const createUser = ({ username, password, firstName, lastName }) => {
       }
     }).then(response => {
       console.log('CREATE USER: ', response)
+      return response
     })
     .catch(error => {
       console.log('ERROR: ', error)
