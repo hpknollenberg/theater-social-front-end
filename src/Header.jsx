@@ -19,7 +19,6 @@ function Header() {
 
   return (
     <div style={{ padding: '10px', backgroundColor: 'black'}}>
-      <Link style={{ marginRight: 20, color: 'white' }} to='/'>Home</Link>
       <Link style={{ marginRight: 20, color: "white" }} to='/login' onClick={() => {submit()}}>Logout</Link>
     </div>
   )

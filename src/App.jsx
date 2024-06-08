@@ -1,11 +1,14 @@
 import { useContext, useState, useEffect } from "react"
-import { AuthContext } from "./context"
+import { AuthContext, UserContext } from "./context"
 import { fetchUser, baseUrl } from "./api"
 import { useNavigate } from "react-router-dom"
+import Tabs from "./Tabs"
+import PostUpload from "./PostUpload"
 
 
 function App() {
   const { auth } = useContext(AuthContext)
+  const { user, setUser } = useContext(UserContext)
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const navigate = useNavigate()
@@ -15,7 +18,8 @@ function App() {
     .then((response) => {
       setFirstName(response.data.first_name)
       setLastName(response.data.last_name)
-
+      setUser(response.data.id)
+      console.log(response)
     })
     .catch(() => {
       navigate("/login")
@@ -25,9 +29,12 @@ function App() {
 
   return (
     <div className='' >
-      <div className="d-flex justify-content-start">
-        <h1>{firstName} {lastName}</h1>
-        <h4 style={{boxShadow: '10px 10px'}}>{}</h4>
+      <div className="">
+        <h1 className="p-5">The Kentucky Theater</h1>
+        <Tabs />
+      </div>
+      <div>
+        <PostUpload />
       </div>
       
     </div>

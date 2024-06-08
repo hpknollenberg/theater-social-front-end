@@ -6,7 +6,7 @@ import {
   Outlet,
 } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { AuthContext } from './context.js'
+import { AuthContextProvider, UserContextProvider } from './context'
 
 //project styles
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -50,34 +50,10 @@ const router = createBrowserRouter([
 
 
 
-const AuthContextProvider = ({ children }) => {
-  let tempToken = JSON.parse(localStorage.getItem('token'))
-  
-  const [accessToken, setAccessToken] = useState(tempToken ? tempToken : [])
-
-  useEffect(() => {
-    localStorage.setItem("token", JSON.stringify(accessToken))
-  }, [accessToken])
-
-  
-  const auth = {
-    accessToken,
-    setAccessToken,
-  }
-
-  return(
-    <AuthContext.Provider value={{ auth: auth }} >
-      {children}
-    </AuthContext.Provider>
-  )
-}
-
-
-
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <AuthContextProvider>
-    <RouterProvider router={router} />
-  </AuthContextProvider>
+  <UserContextProvider>
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
+  </UserContextProvider>
 )
