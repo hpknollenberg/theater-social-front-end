@@ -7,6 +7,7 @@ import { AuthContext } from "./context"
 const CreateNewUser = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const navigate = useNavigate()
@@ -23,6 +24,31 @@ const CreateNewUser = () => {
     
     }
   
+  
+  const SubmitButton = () => {
+    if (username && password && firstName && lastName && password === confirmPassword) {
+      return(
+      <div style={{ marginTop: 20 }}>
+        <button onClick={() => submit()}>Submit</button>
+      </div>
+      )
+    } else if (password !== confirmPassword) {
+      return (
+      <div style={{ marginTop: 20 }}>
+        <p style={{ color: "white", fontWeight: 'bold' }}>PASSWORDS DO NOT MATCH</p>
+        <button>Submit</button>
+      </div>
+      )
+    } else {
+      return (
+        <div style={{ marginTop: 20 }}>
+        <button>Submit</button>
+      </div>
+      )
+    }
+  }
+
+
 
   return (
     <div>
@@ -38,8 +64,18 @@ const CreateNewUser = () => {
       <div>
         <div>Password:</div>
         <input
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        />
+      </div>
+
+      <div>
+        <div>Confirm Password:</div>
+        <input
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
         />
       </div>
 
@@ -58,10 +94,7 @@ const CreateNewUser = () => {
           value={lastName}
         />
       </div>
-
-      <div style={{ marginTop: 20 }}>
-        <button onClick={() => submit()}>Submit</button>
-      </div>
+      <SubmitButton />
     </div>
   )
 }

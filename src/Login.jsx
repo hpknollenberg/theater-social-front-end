@@ -17,7 +17,7 @@ function Login() {
   }
 
   return (
-    <div className="p-5">
+    <div className="p-5" style={{ }}>
 
       <h1>Login</h1>
       <div>
@@ -31,6 +31,7 @@ function Login() {
       <div>
         <div>Password:</div>
         <input
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />

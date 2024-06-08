@@ -18,9 +18,9 @@ function Header() {
 
 
   return (
-    <div style={{ margin: 10 }}>
-      <Link style={{ marginRight: 20 }} to='/'>Home</Link>
-      <Link style={{ marginRight: 20 }} to='/login' onClick={() => {submit()}}>Logout</Link>
+    <div style={{ padding: '10px', backgroundColor: 'black'}}>
+      <Link style={{ marginRight: 20, color: 'white' }} to='/'>Home</Link>
+      <Link style={{ marginRight: 20, color: "white" }} to='/login' onClick={() => {submit()}}>Logout</Link>
     </div>
   )
 }
