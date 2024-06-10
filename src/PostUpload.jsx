@@ -6,8 +6,8 @@ import { useContext, useState } from "react"
 const PostUpload = () => {
     const { user, setUser } = useContext(UserContext)
     const { auth } = useContext(AuthContext)
-    const [postMessage, setPostMessage] = useState([])
-    const [postImage, setPostImage] = useState([])
+    const [postMessage, setPostMessage] = useState("")
+    const [postImage, setPostImage] = useState("")
 
 
     const submitPost = () => {
@@ -24,12 +24,13 @@ const PostUpload = () => {
         return (
             <div>
                 <div>
-                    <textarea style={{ height: '100px', width: '300px', margin: "10px" }} onChange={e => setPostMessage(e.target.value)} ></textarea>
+                    <textarea style={{ height: '100px', width: '375px', margin: "10px" }} onChange={e => setPostMessage(e.target.value)} ></textarea>
                 </div>
                 <div>
-                    <input style={{ margin: '10px', width: '300px' }} type="file" accept='image/*' onChange={e => setPostImage(e.target.files[0])} />
+                    <input style={{ margin: '10px', width: '275px' }} type="file" accept='image/*' onChange={e => setPostImage(e.target.files[0])} />
                     <button style={{ margin: '10px' }} onClick={() => {submitPost()}}>Submit Post</button>
                 </div>
+                <hr />
             </div>
         )
     }
