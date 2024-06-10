@@ -15,7 +15,7 @@ const UpcomingFilms = () => {
       console.log(response)
       setFilms(response.data)
     }) 
-  })
+  }, [])
 
 
   return (
