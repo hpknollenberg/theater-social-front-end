@@ -44,6 +44,40 @@ export const createUser = ({ username, password, firstName, lastName }) => {
   }
 
 
+  export const editPost = ({ auth, user, id, editMessage, editImage }) => {
+    return axios({
+      method: 'put',
+      url: `${baseUrl}/edit-post/`,
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      data: {
+        author: user,
+        post: id,
+        content: editMessage,
+        image: editImage
+      }
+  }).then(response => {console.log("EDIT POST RESPONSE: ", response)})
+  }
+
+
+  export const deletePost = ({ auth, user, id }) => {
+    return axios({
+      method: 'delete',
+      url: `${baseUrl}/delete-post/`,
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      data: {
+        author: user,
+        post: id
+      }
+    })
+  }
+
+
   export const fetchUser = ({ auth }) => {
     return axios({
       method: 'get',
@@ -57,6 +91,17 @@ export const createUser = ({ username, password, firstName, lastName }) => {
     .catch(error => {
       console.log('FETCH USER ERROR: ', error)
       auth.setAccessToken([])
+    })
+  }
+
+
+  export const getPosts = ({ auth }) => {
+    return axios({
+      method: 'get',
+      url: `${baseUrl}/get-posts`,
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`
+      }
     })
   }
 
