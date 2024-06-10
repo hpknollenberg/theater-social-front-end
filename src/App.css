@@ -3,6 +3,6 @@ body {
   color: white
 }
 
-h1 {
+h1, h2, h6 {
   text-shadow: 2px 2px 2px black
 }

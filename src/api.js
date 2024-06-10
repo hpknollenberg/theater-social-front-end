@@ -106,6 +106,15 @@ export const createUser = ({ username, password, firstName, lastName }) => {
   }
 
 
+  export const getShowtimes = () => {
+    return axios({
+      method: 'get',
+      url: `https://raw.githubusercontent.com/hpknollenberg/showtimes/main/showtimes.json`
+    })
+    .then(response => {console.log("SHOWTIMES: ", response); return response})
+  }
+
+
   export const getToken = ({ auth, username, password }) => {
     return axios.post(`${baseUrl}/token/`, {
       username: username,
