@@ -16,6 +16,10 @@ import App from './App.jsx'
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 import Login from './Login.jsx'
+import Showtimes from './Showtimes.jsx'
+import UpcomingFilms from './UpcomingFilms.jsx'
+import Menu from './Menu.jsx'
+import Discussion from './Discussion.jsx'
 
 
 
@@ -44,6 +48,22 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login />
       },
+      {
+        path: '/showtimes',
+        element: <Showtimes />
+      },
+      {
+        path: '/upcomingfilms',
+        element: <UpcomingFilms />
+      },
+      {
+        path: '/menu',
+        element: <Menu />
+      },
+      {
+        path: 'discussion',
+        element: <Discussion />
+      }
     ]
   }
 ])

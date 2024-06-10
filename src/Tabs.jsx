@@ -1,22 +1,23 @@
 
-const Tabs = () => {
+const Tabs = ({activeTab}) => {
+    
     return (
         <div>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Feed</a>
+            <ul className="nav nav-tabs">
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "feed" ? "active" : "")}`} aria-current="page" href="/" style={{color: `${(activeTab === "feed") ? "black" : "white"}`}}>Feed</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style={{ color: "white" }}>Showtimes</a>
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "showtimes" ? "active" : "")}`} href="/showtimes" style={{color: `${(activeTab === "showtimes") ? "black" : "white"}` }}>Showtimes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style={{ color: "white" }}>Upcoming Films</a>
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "upcomingfilms" ? "active" : "")}`} href="/upcomingfilms" style={{color: `${(activeTab === "upcomingfilms") ? "black" : "white"}` }}>Upcoming Films</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style={{ color: "white" }}>Menu</a>
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "menu" ? "active" : "")}`} href="/menu" style={{color: `${(activeTab === "menu") ? "black" : "white"}` }}>Menu</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style={{ color: "white" }}>Discussion</a>
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "discussion" ? "active" : "")}`} href="/discussion" style={{color: `${(activeTab === "discussion") ? "black" : "white"}` }}>Discussion</a>
                 </li>
             </ul>
         </div>
