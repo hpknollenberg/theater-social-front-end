@@ -1,10 +1,11 @@
 import { getPosts, baseUrl, deletePost, editPost } from "./api"
-import { AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, UserContext } from "./context"
 import { useContext, useState, useEffect } from "react"
 
 
 const Posts = () => {
     const { user, setUser } = useContext(UserContext)
+    const { admin, setAdmin } = useContext(AdminContext)
     const { auth } = useContext(AuthContext)
     const [posts, setPosts] = useState([])
     const [edit, setEdit] = useState(false)
@@ -22,10 +23,10 @@ const Posts = () => {
 
 
     const Delete = ({id}) => {
-        if (user === 1) {
+        if (admin === true) {
             return (
                 <button style={{ margin: '10px', marginLeft: '5px' }}
-                    onClick={() => {deletePost({auth, user, id})}}
+                    onClick={() => {deletePost({auth, user, admin, id})}}
                 >Delete</button>
             )
         }
@@ -33,7 +34,7 @@ const Posts = () => {
 
 
     const EditButton = () => {
-        if (user === 1 ) {
+        if (admin === true ) {
             return (
                 <button style={{ margin: '10px', marginRight: '5px' }}
                     onClick={() => setEdit(!edit)}
@@ -48,13 +49,13 @@ const Posts = () => {
         const [editImage, setEditImage] = useState("")
 
 
-        if (user === 1 && edit === true) {
+        if (admin === true && edit === true) {
             return (
             <div>
                 <textarea style={{ height: '100px', width: '375px', margin: "10px" }} onChange={e => setEditMessage(e.target.value)}>{content}</textarea>
                 <div>
                     <input style={{ margin: '10px', width: '275px' }} type="file" accept='image/*' onChange={e => setEditImage(e.target.files[0])} />
-                    <button style={{ margin: '10px' }} onClick={() => {editPost({auth, user, id, editMessage, editImage})}}>Submit Edits</button>
+                    <button style={{ margin: '10px' }} onClick={() => {editPost({auth, user, admin, id, editMessage, editImage})}}>Submit Edits</button>
                 </div>
             </div>
             )

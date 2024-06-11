@@ -1,11 +1,12 @@
 import { createFilm } from "./api"
-import { AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, UserContext } from "./context"
 import { useContext, useState } from "react"
 
 
 const UpcomingFilmsUpload = () => {
     const { user, setUser } = useContext(UserContext)
     const { auth } = useContext(AuthContext)
+    const { admin, setAdmin } = useContext(AdminContext)
     const [filmDate, setFilmDate] = useState("")
     const [filmName, setFilmName] = useState("")
     const [filmImage, setFilmImage] = useState("")
@@ -15,6 +16,7 @@ const UpcomingFilmsUpload = () => {
         createFilm({
             auth,
             user,
+            admin,
             filmDate,
             filmName,
             filmImage
@@ -22,7 +24,7 @@ const UpcomingFilmsUpload = () => {
     }
 
 
-    if (user === 1) {
+    if (admin === true) {
         return (
             <div>
                 <div>
