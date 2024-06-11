@@ -60,24 +60,61 @@ export const createUser = ({ username, password, firstName, lastName}) => {
     .catch(error => {
       console.log('ERROR: ', error)
     })
-  }
+}
 
-  
-  export const deletePost = ({ auth, user, admin, id }) => {
-    return axios({
-      method: 'delete',
-      url: `${baseUrl}/delete-post/`,
-      headers: {
-        Authorization: `Bearer ${auth.accessToken}`,
-        'Content-Type': 'multipart/form-data'
-      },
-      data: {
-        author: user,
-        is_admin: admin,
-        post: id
-      }
-    })
-  }
+
+export const deleteFilm = ({ auth, user, admin, id }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-film/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      film: id
+    }
+  })
+} 
+
+
+export const deletePost = ({ auth, user, admin, id }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-post/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      post: id
+    }
+  })
+}
+
+
+export const editFilm = ({ auth, user, admin, id, editFilmName, editDate, editFilmImage}) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/edit-film/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      film: id,
+      title: editFilmName,
+      release_date: editDate,
+      image: editFilmImage,
+    }
+  })
+}
           
           
 export const editPost = ({ auth, user, admin, id, editMessage, editImage }) => {
