@@ -4,7 +4,7 @@ import axios from 'axios'
 export const baseUrl = "http://127.0.0.1:8000"
 
 
-export const createFilm = ({ auth, user, filmDate, filmName, filmImage }) => {
+export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage }) => {
   return axios({
     method: 'post',
     url: `${baseUrl}/create-film/`,
@@ -14,6 +14,7 @@ export const createFilm = ({ auth, user, filmDate, filmName, filmImage }) => {
     },
     data: {
       author: user,
+      is_admin: admin,
       release_date: filmDate,
       title: filmName,
       image: filmImage
@@ -22,7 +23,7 @@ export const createFilm = ({ auth, user, filmDate, filmName, filmImage }) => {
 }
 
 
-export const createPost = ({ auth, user, postMessage, postImage }) => {
+export const createPost = ({ auth, user, admin, postMessage, postImage }) => {
   return axios({
     method: 'post',
     url: `${baseUrl}/create-post/`,
@@ -32,6 +33,7 @@ export const createPost = ({ auth, user, postMessage, postImage }) => {
     },
     data: {
       author: user,
+      is_admin: admin,
       content: postMessage,
       image: postImage
     }
@@ -41,15 +43,15 @@ export const createPost = ({ auth, user, postMessage, postImage }) => {
 }
 
 
-export const createUser = ({ username, password, firstName, lastName }) => {
+export const createUser = ({ username, password, firstName, lastName}) => {
     return axios({
       method: 'post',
       url: `${baseUrl}/create-user/`, 
       data: {
         username,
-        password: password,
+        password,
         first_name: firstName,
-        last_name: lastName
+        last_name: lastName,
       }
     }).then(response => {
       console.log('CREATE USER: ', response)
@@ -61,7 +63,7 @@ export const createUser = ({ username, password, firstName, lastName }) => {
   }
 
   
-  export const deletePost = ({ auth, user, id }) => {
+  export const deletePost = ({ auth, user, admin, id }) => {
     return axios({
       method: 'delete',
       url: `${baseUrl}/delete-post/`,
@@ -71,13 +73,14 @@ export const createUser = ({ username, password, firstName, lastName }) => {
       },
       data: {
         author: user,
+        is_admin: admin,
         post: id
       }
     })
   }
           
           
-export const editPost = ({ auth, user, id, editMessage, editImage }) => {
+export const editPost = ({ auth, user, admin, id, editMessage, editImage }) => {
   return axios({
     method: 'put',
     url: `${baseUrl}/edit-post/`,
@@ -87,6 +90,7 @@ export const editPost = ({ auth, user, id, editMessage, editImage }) => {
     },
     data: {
       author: user,
+      is_admin: admin,
       post: id,
       content: editMessage,
       image: editImage

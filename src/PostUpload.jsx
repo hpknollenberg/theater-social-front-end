@@ -1,11 +1,12 @@
 import { createPost } from "./api"
-import { AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, UserContext } from "./context"
 import { useContext, useState } from "react"
 
 
 const PostUpload = () => {
     const { user, setUser } = useContext(UserContext)
     const { auth } = useContext(AuthContext)
+    const {admin, setAdmin } = useContext(AdminContext)
     const [postMessage, setPostMessage] = useState("")
     const [postImage, setPostImage] = useState("")
 
@@ -14,13 +15,14 @@ const PostUpload = () => {
         createPost({
             auth,
             user,
+            admin,
             postMessage,
             postImage
         })
     }
 
 
-    if (user === 1) {
+    if (admin === true) {
         return (
             <div>
                 <div>

@@ -46,3 +46,24 @@ export const AuthContextProvider = ({ children }) => {
       </UserContext.Provider>
     )
   }
+
+
+
+  export const AdminContext = createContext()
+
+  export const AdminContextProvider = ({ children }) => {
+    let tempAdmin = JSON.parse(localStorage.getItem('is_admin'))
+    
+    const [admin, setAdmin] = useState(tempAdmin ? tempAdmin : false)
+  
+    useEffect(() => {
+      localStorage.setItem("is_admin", JSON.stringify(admin))
+    }, [admin])
+  
+  
+    return(
+      <AdminContext.Provider value={{ admin, setAdmin }} >
+        {children}
+      </AdminContext.Provider>
+    )
+  }
