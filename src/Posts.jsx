@@ -9,6 +9,7 @@ const Posts = () => {
     const { auth } = useContext(AuthContext)
     const [posts, setPosts] = useState([])
     const [edit, setEdit] = useState(false)
+    const [editId, setEditId] = useState(0)
     
 
 
@@ -33,11 +34,14 @@ const Posts = () => {
     }
 
 
-    const EditButton = () => {
+    const EditButton = ({id}) => {
         if (admin === true ) {
             return (
                 <button style={{ margin: '10px', marginRight: '5px' }}
-                    onClick={() => setEdit(!edit)}
+                    onClick={() => {
+                        setEdit(!edit)
+                        setEditId(id)
+                    }}
                 >Edit</button>
             )
         }
@@ -49,7 +53,7 @@ const Posts = () => {
         const [editImage, setEditImage] = useState("")
 
 
-        if (admin === true && edit === true) {
+        if (admin === true && edit === true && id === editId) {
             return (
             <div>
                 <textarea style={{ height: '100px', width: '375px', margin: "10px" }} onChange={e => setEditMessage(e.target.value)}>{content}</textarea>
@@ -78,7 +82,7 @@ const Posts = () => {
                 <div key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'solid', color: 'white'}}>
                     <Image image={post.image} />
                     <p style ={{ margin: '10px' }}>{post.content}</p>
-                    <EditButton />
+                    <EditButton id={post.id}/>
                     <Delete id={post.id} />
                     <EditPanel content={post.content} id={post.id} image={post.image} />
                 </div>
