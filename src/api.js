@@ -279,3 +279,17 @@ export const getToken = ({ auth, username, password }) => {
     auth.setAccessToken([])
   })
 }
+
+
+export const updateLikes = ({ auth, post }) => {
+  return axios({
+    method: 'put',
+    url:`${baseUrl}/update-likes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      post
+    }
+  })
+}

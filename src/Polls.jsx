@@ -12,18 +12,9 @@ const Polls = () => {
   const { admin, setAdmin } = useContext(AdminContext)
   const [polls, setPolls] = useState([])
   const [selectedPoll, setSelectedPoll] = useState([])
-  const [votes, setVotes] = useState([])
   const [greyedOut, setGreyedOut] = useState([])
   const [toggle, setToggle] = useState(true)
 
-
-  // useEffect(() => {
-  //   getPolls({auth})
-  //   .then(response => {
-  //     console.log("Poll: ", response)
-  //     setPolls(response.data)
-  //   })
-  // }, [toggle])
 
   useEffect(() => {
       getProfileVotes({ auth })
@@ -52,7 +43,7 @@ const Polls = () => {
     const DeleteButton = ({poll}) => {
       if (admin === true) {
         return(
-          <div style={{ marginLeft: '10px' }}>
+          <div style={{ margin: '10px' }}>
             <button onClick={() => {console.log(poll); deletePoll({auth, user, admin, poll})}}>Delete Poll</button>
           </div>
         )
@@ -75,7 +66,7 @@ const Polls = () => {
       <div>
       {polls && polls.map((poll, index) => {
         console.log("greyed out: ", greyedOut)
-        if (!greyedOut.includes(poll.id)) {
+        if (!greyedOut.includes(poll.id) && admin !== true) {
           return (
           <div key={index} style={{ margin: '10px'}}>
             <h5>{poll.name}</h5>

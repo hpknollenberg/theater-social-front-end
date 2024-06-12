@@ -1,4 +1,4 @@
-import { getPosts, baseUrl, deletePost, editPost } from "./api"
+import { getPosts, baseUrl, deletePost, editPost, updateLikes } from "./api"
 import { AdminContext, AuthContext, UserContext } from "./context"
 import { useContext, useState, useEffect } from "react"
 
@@ -10,6 +10,7 @@ const Posts = () => {
     const [posts, setPosts] = useState([])
     const [edit, setEdit] = useState(false)
     const [editId, setEditId] = useState(0)
+    const [toggle, setToggle] = useState(false)
     
 
 
@@ -20,7 +21,7 @@ const Posts = () => {
             console.log("POSTS: ", posts)
         })
         .catch(error => console.log('DISPLAY POSTS ERROR: ', error))
-    }, [])
+    }, [toggle])
 
 
     const Delete = ({id}) => {
@@ -76,12 +77,22 @@ const Posts = () => {
     }
 
 
+    const LikesButton = ({post, likesCount}) => {
+        return (
+            <div>
+                <button style={{margin: "10px"}} onClick={() => {updateLikes({auth, post}).then(() => setToggle(toggle => !toggle))}}>Like</button>
+                Likes: {likesCount}
+            </div>
+        )
+    }
+
     return (
         <div>
             {posts && posts.map(post => (
                 <div key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'solid', color: 'white'}}>
                     <Image image={post.image} />
                     <p style ={{ margin: '10px' }}>{post.content}</p>
+                    <LikesButton post={post.id} likesCount={post.likes_count}/>
                     <EditButton id={post.id}/>
                     <Delete id={post.id} />
                     <EditPanel content={post.content} id={post.id} image={post.image} />
