@@ -246,6 +246,17 @@ export const getPosts = ({ auth }) => {
 }
 
 
+export const getProfileVotes = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-votes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
 export const getShowtimes = () => {
   return axios({
     method: 'get',

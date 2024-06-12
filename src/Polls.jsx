@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import PollsUpload from "./PollsUpload"
 import Tabs from "./Tabs"
-import { getPolls, createVote, deletePoll } from "./api"
+import { getPolls, createVote, deletePoll, getProfileVotes } from "./api"
 import { AdminContext, AuthContext, UserContext } from "./context"
 
 
@@ -12,15 +12,38 @@ const Polls = () => {
   const { admin, setAdmin } = useContext(AdminContext)
   const [polls, setPolls] = useState([])
   const [selectedPoll, setSelectedPoll] = useState([])
+  const [votes, setVotes] = useState([])
+  const [greyedOut, setGreyedOut] = useState([])
+  const [toggle, setToggle] = useState(true)
+
+
+  // useEffect(() => {
+  //   getPolls({auth})
+  //   .then(response => {
+  //     console.log("Poll: ", response)
+  //     setPolls(response.data)
+  //   })
+  // }, [toggle])
 
   useEffect(() => {
-    getPolls({auth})
-    .then(response => {
-      console.log(response)
-      setPolls(response.data)
-    })
-  }, [])
-
+      getProfileVotes({ auth })
+      .then(response => {
+        console.log("response: ", response.data)
+        response.data.map((vote) => {
+          if (!greyedOut.includes(vote.poll.id)) {
+            setGreyedOut((greyedOut) => [...greyedOut, vote.poll.id])
+          }
+        })
+      })
+      .then(() => {
+        getPolls({auth})
+        .then(response => {
+          console.log("Poll: ", response)
+          setPolls(response.data)
+        })
+      })
+  }, [toggle])
+  
 
   const IndividualPoll = () => {
     const [selectedOption, setSelectedOption] = useState("")
@@ -40,33 +63,56 @@ const Polls = () => {
       setSelectedOption(changeEvent.target.value)
     }
 
+
+
     const submitPoll = () => {
-      console.log(user, selectedPoll, selectedOption)
       createVote({auth, user, selectedPoll, selectedOption})
-      .then(response => {console.log(response)})
-    }
+      .then(() => {
+        setToggle(toggle => !toggle)
+      })}
 
     return (
       <div>
-      {polls && polls.map((poll, index) => (
-        <div key={index} style={{ margin: '10px'}}>
-          <h5>{poll.name}</h5>
-          {poll.choices && poll.choices.map((choice, index) => (
-            <div key={index}>
-            <label  name={choice.name} >
-              <input type="radio" value={choice.id} checked={selectedOption === `${choice.id}`} onChange={(changeEvent) => {handleOptionChange(changeEvent); setSelectedPoll(poll.id)}} style={{ margin: '5px', marginLeft: '15px' }}/>
-              {choice.name}
-            </label>
-            </div>
-          ))}
-          <button style={{ margin: '10px' }} onClick={() => {submitPoll()}}>Submit Poll</button>
-          <DeleteButton poll={poll.id}/>
-          <hr></hr>
-        </div>
-      ))}
+      {polls && polls.map((poll, index) => {
+        console.log("greyed out: ", greyedOut)
+        if (!greyedOut.includes(poll.id)) {
+          return (
+          <div key={index} style={{ margin: '10px'}}>
+            <h5>{poll.name}</h5>
+            {poll.choices && poll.choices.map((choice, index) => (
+              <div key={index}>
+              <label  name={choice.name} >
+                <input type="radio" value={choice.id} checked={selectedOption === `${choice.id}`} onChange={(changeEvent) => {handleOptionChange(changeEvent); setSelectedPoll(poll.id)}} style={{ margin: '5px', marginLeft: '15px' }}/>
+                {choice.name}
+              </label>
+              </div>
+            ))}
+            <button style={{ margin: '10px' }} onClick={() => {submitPoll()}}>Submit Poll</button>
+            <DeleteButton poll={poll.id}/>
+            <hr></hr>
+          </div>
+      )} else {
+        return (
+          <div key={index} style={{ margin: '10px'}}>
+            <h5>{poll.name}</h5>
+            {poll.choices && poll.choices.map((choice, index) => (
+              <div key={index}>
+                {choice.name} - {choice.vote_count}
+              </div>
+            ))}
+            <DeleteButton poll={poll.id}/>
+            <hr></hr>
+          </div>
+      )
+      }
+      })}
       </div>
     )
   }
+
+
+  
+
 
   return (
     <div className='' >
@@ -77,7 +123,7 @@ const Polls = () => {
         <PollsUpload />
         <hr></hr>
         <IndividualPoll />
-
+        
     </div>
   )
 }
