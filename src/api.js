@@ -114,6 +114,22 @@ export const deleteFilm = ({ auth, user, admin, id }) => {
 } 
 
 
+export const deletePoll = ({ auth, user, admin, poll }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-poll/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      poll: poll
+    }
+  })
+}
+
+
 export const deletePost = ({ auth, user, admin, id }) => {
   return axios({
     method: 'delete',
