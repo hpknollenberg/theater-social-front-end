@@ -22,6 +22,24 @@ export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage })
   }).then((response) => {return response})
 }
 
+export const createPoll = ({ auth, user, admin, title, choices, pollId }) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-poll/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      title: title,
+      choices: JSON.stringify(choices),
+      id: pollId
+    }
+  })
+}
+
 
 export const createPost = ({ auth, user, admin, postMessage, postImage }) => {
   return axios({
@@ -60,6 +78,22 @@ export const createUser = ({ username, password, firstName, lastName}) => {
     .catch(error => {
       console.log('ERROR: ', error)
     })
+}
+
+
+export const createVote = ({ auth, user, selectedPoll, selectedOption }) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-vote/`, 
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      profile: user,
+      poll: selectedPoll,
+      choice: selectedOption,
+    }
+  })
 }
 
 
@@ -162,6 +196,27 @@ export const getFilms = ({ auth }) => {
     }
   })
 }
+
+
+export const getMenu = () => {
+  return axios({
+    method: 'get',
+    url: `https://raw.githubusercontent.com/hpknollenberg/showtimes/main/menu.json`
+  })
+  .then(response => {console.log("MENU: ", response); return response})
+}
+
+
+export const getPolls = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-polls`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
 
 
 export const getPosts = ({ auth }) => {

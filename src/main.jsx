@@ -19,7 +19,7 @@ import Login from './Login.jsx'
 import Showtimes from './Showtimes.jsx'
 import UpcomingFilms from './UpcomingFilms.jsx'
 import Menu from './Menu.jsx'
-import Discussion from './Discussion.jsx'
+import Polls from './Polls.jsx'
 
 
 
@@ -61,8 +61,8 @@ const router = createBrowserRouter([
         element: <Menu />
       },
       {
-        path: 'discussion',
-        element: <Discussion />
+        path: 'polls',
+        element: <Polls />
       }
     ]
   }
