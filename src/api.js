@@ -5,6 +5,22 @@ import axios from 'axios'
 export const baseUrl = "https://project-theater.fly.dev"
 
 
+export const createComment = ({auth, user, content, discussion}) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-comment/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      author: user,
+      content: content,
+      discussion: discussion
+    }
+  })
+}
+
+
 export const createDiscussion = ({auth, user, admin, title, description, image}) => {
   return axios({
     method: 'post',
@@ -220,6 +236,28 @@ export const fetchUser = ({ auth }) => {
         console.log('FETCH USER ERROR: ', error)
         auth.setAccessToken([])
     })
+}
+
+
+export const getComments = ({ auth }) => {
+  return axios({
+    mehtod: 'get',
+    url: `${baseUrl}/get-comments`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
+export const getDiscussions = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-discussions`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
 }
 
 
