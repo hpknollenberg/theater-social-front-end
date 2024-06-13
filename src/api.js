@@ -133,6 +133,22 @@ export const createVote = ({ auth, user, selectedPoll, selectedOption }) => {
 }
 
 
+export const deleteDiscussion = ({ auth, user, admin, discussion }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-discussion/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      discussion: discussion
+    }
+  })
+}
+
+
 export const deleteFilm = ({ auth, user, admin, id }) => {
   return axios({
     method: 'delete',
@@ -335,6 +351,20 @@ export const getToken = ({ auth, username, password }) => {
   .catch(error => {
     console.log('ERROR: ', error)
     auth.setAccessToken([])
+  })
+}
+
+
+export const updateCommentLikes = ({ auth, comment }) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/update-comment-likes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      comment
+    }
   })
 }
 
