@@ -5,6 +5,22 @@ import axios from 'axios'
 export const baseUrl = "https://project-theater.fly.dev"
 
 
+export const createComment = ({auth, user, content, discussion}) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-comment/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      author: user,
+      content: content,
+      discussion: discussion
+    }
+  })
+}
+
+
 export const createDiscussion = ({auth, user, admin, title, description, image}) => {
   return axios({
     method: 'post',
@@ -117,6 +133,22 @@ export const createVote = ({ auth, user, selectedPoll, selectedOption }) => {
 }
 
 
+export const deleteDiscussion = ({ auth, user, admin, discussion }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-discussion/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      discussion: discussion
+    }
+  })
+}
+
+
 export const deleteFilm = ({ auth, user, admin, id }) => {
   return axios({
     method: 'delete',
@@ -223,6 +255,28 @@ export const fetchUser = ({ auth }) => {
 }
 
 
+export const getComments = ({ auth }) => {
+  return axios({
+    mehtod: 'get',
+    url: `${baseUrl}/get-comments`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
+export const getDiscussions = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-discussions`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
 export const getFilms = ({ auth }) => {
   return axios({
     method: 'get',
@@ -297,6 +351,20 @@ export const getToken = ({ auth, username, password }) => {
   .catch(error => {
     console.log('ERROR: ', error)
     auth.setAccessToken([])
+  })
+}
+
+
+export const updateCommentLikes = ({ auth, comment }) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/update-comment-likes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      comment
+    }
   })
 }
 
