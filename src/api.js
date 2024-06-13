@@ -1,8 +1,27 @@
 import axios from 'axios'
 
 
-// export const baseUrl = "http://127.0.0.1:8000"
-export const baseUrl = "https://project-theater.fly.dev"
+export const baseUrl = "http://127.0.0.1:8000"
+// export const baseUrl = "https://project-theater.fly.dev"
+
+
+export const createDiscussion = ({auth, user, admin, title, description, image}) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-discussion/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      author: user,
+      is_admin: admin,
+      name: title,
+      description: description,
+      image: image
+    }
+  })
+}
 
 
 export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage }) => {

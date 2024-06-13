@@ -19,6 +19,9 @@ const Tabs = ({activeTab}) => {
                 <li className="nav-item">
                     <a className={`nav-link ${(activeTab === "polls" ? "active" : "")}`} href="/polls" style={{color: `${(activeTab === "polls") ? "black" : "white"}` }}>Polls</a>
                 </li>
+                <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "discussion" ? "active" : "")}`} href="/discussion" style={{color: `${(activeTab === "discussion") ? "black" : "white"}` }}>Discussion</a>
+                </li>
             </ul>
         </div>
     )
