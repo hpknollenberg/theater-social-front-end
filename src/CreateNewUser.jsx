@@ -14,7 +14,7 @@ const CreateNewUser = () => {
   const { auth } = useContext(AuthContext)
 
   const submit = () => {
-    createUser({ username, password, firstName, lastName, adminKey })
+    createUser({ username, password, firstName, lastName })
     .then ((response) => {
       getToken({ auth, username, password })
       .then ((response) => {

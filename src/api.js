@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 
-export const baseUrl = "http://127.0.0.1:8000"
+// export const baseUrl = "http://127.0.0.1:8000"
+export const baseUrl = "https://project-theater.fly.dev"
 
 
 export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage }) => {
