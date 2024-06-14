@@ -106,7 +106,7 @@ const Posts = () => {
     return (
         <div>
             {posts && posts.map(post => (
-                <div key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'solid', color: 'white'}}>
+                <div key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'solid', borderColor: 'goldenrod'}}>
                     <Image image={post.image} />
                     <p style ={{ margin: '10px' }}>{post.content}</p>
                     <LikesButton post={post.id} likesCount={post.likes_count}/>
