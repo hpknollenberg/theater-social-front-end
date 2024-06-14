@@ -133,6 +133,21 @@ export const createVote = ({ auth, user, selectedPoll, selectedOption }) => {
 }
 
 
+export const deleteComment = ({ auth, user, comment}) => {
+  return axios ({
+    method: 'delete',
+    url: `${baseUrl}/delete-comment/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      author: user,
+      comment: comment
+    }
+  })
+}
+
+
 export const deleteDiscussion = ({ auth, user, admin, discussion }) => {
   return axios({
     method: 'delete',
