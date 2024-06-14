@@ -2,7 +2,7 @@ import Tabs from "./Tabs"
 import DiscussionUpload from "./DiscussionUpload"
 import { useContext, useEffect, useState } from "react"
 import { AdminContext, AuthContext, UserContext } from "./context"
-import { baseUrl, getDiscussions, createComment, getComments, updateCommentLikes, deleteDiscussion } from "./api"
+import { baseUrl, getDiscussions, createComment, getComments, updateCommentLikes, deleteDiscussion, deleteComment } from "./api"
 
 
 const Discussion = () => {
@@ -17,6 +17,8 @@ const Discussion = () => {
     const [discussionToggle, setDiscussionToggle] = useState(false)
     const [openId, setOpenId] = useState(0)
     const [deleteId, setDeleteId] = useState(0)
+    const [deleteCommentId, setDeleteCommentId] = useState(0)
+    const [deleteCommentCheck, setDeleteCommentCheck] = useState(false)
 
 
     useEffect(() => {
@@ -69,6 +71,37 @@ const Discussion = () => {
     }
 
 
+    const submitDeleteComment = ({comment}) => {
+        if (deleteCommentCheck === true && deleteCommentId === comment) {
+            deleteComment({auth, user, comment})
+            setToggle(toggle => !toggle)
+        }
+        setDeleteCommentCheck(deleteCommentCheck => !deleteCommentCheck)
+        
+    }
+
+
+    const DeleteCommentCheck = ({comment}) => {
+        if (deleteCommentCheck === true && deleteCommentId === comment) {
+            return (
+                <p>Are you sure you want to delete?</p>
+            )
+        }
+    }
+
+
+    const DeleteCommentButton = ({comment, author}) => {
+        if (admin === true || user === author) {
+            return (
+                <div style={{ marginTop: '10px' }}>   
+                    <button style={{backgroundColor: 'red' }} onClick={() => {submitDeleteComment({comment}); setDeleteCommentId(comment)}}>Delete Comment</button>
+                    <DeleteCheck id={comment}/>
+                </div>
+            )
+        }
+    }
+
+
     const submitComment = ({discussion, content}) => {
         createComment({ auth, user, content, discussion })
         .then(() => setToggle(toggle => !toggle))
@@ -97,7 +130,7 @@ const Discussion = () => {
         if (open === true && discussion === openId) {
             return (
                 <div>
-                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'solid', color: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll" }}>
+                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'solid', borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll" }}>
                         {comments && comments.filter(x => x.discussion.id === discussion).map(comment => {
                             return (
                                 <div key={comment.id}>
@@ -105,6 +138,8 @@ const Discussion = () => {
                                     <p style={{color: 'white'}}>{comment.content}</p>
                                     <p>Likes: {comment.likes_count}</p>
                                     <button onClick={() => submitLike(comment.id)}>Like</button>
+                                    <DeleteCommentButton comment={comment.id} author={comment.author.id} />
+                                    <DeleteCommentCheck comment={comment.id}/>
                                     <hr></hr>
                                 </div>
                             )
@@ -126,7 +161,7 @@ const Discussion = () => {
             <div>
                 {discussions && discussions.map((discussion) => {
                     return (
-                        <div style={{ margin: '10px', marginBottom: "25px", borderStyle: 'solid', padding: '10px'}}>
+                        <div style={{ margin: '10px', marginBottom: "25px", borderStyle: 'solid', borderColor: 'goldenrod', padding: '10px'}}>
                             <div style={{ display: "flex", alignItems: "center", margin: '10px'}}>
                                 <img src={`${baseUrl}${discussion.image}`} style={{maxHeight: '200px'}} />
                                 <div style={{ margin: '10px' }}>

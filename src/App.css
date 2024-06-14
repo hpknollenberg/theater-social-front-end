@@ -1,8 +1,13 @@
 body {
   background-color: maroon;
-  color: white
+  color: white;
 }
 
 h1, h2, h3, h5, h6 {
   text-shadow: 2px 2px 2px black
+}
+
+hr {
+  border-color: goldenrod;
+  border-width: 2px;
 }
