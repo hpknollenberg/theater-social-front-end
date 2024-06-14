@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from "react"
 import { AdminContext, AuthContext, UserContext } from "./context"
 import { fetchUser, baseUrl } from "./api"
-import { useNavigate } from "react-router-dom"
 import Tabs from "./Tabs"
 import PostUpload from "./PostUpload"
 import Posts from "./Posts"
@@ -13,7 +12,6 @@ function App() {
   const { admin, setAdmin } = useContext(AdminContext)
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
-  const navigate = useNavigate()
   
   useEffect(() => {
     fetchUser({ auth })
@@ -23,9 +21,6 @@ function App() {
       setAdmin(response.data.is_admin)
       setUser(response.data.id)
       console.log("Profile: ", response)
-    })
-    .catch(() => {
-      navigate("/login")
     })
   }, [auth.accessToken])
 

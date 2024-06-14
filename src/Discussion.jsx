@@ -1,8 +1,9 @@
 import Tabs from "./Tabs"
 import DiscussionUpload from "./DiscussionUpload"
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AdminContext, AuthContext, UserContext } from "./context"
 import { baseUrl, getDiscussions, createComment, getComments, updateCommentLikes, deleteDiscussion } from "./api"
+
 
 const Discussion = () => {
     const { auth } = useContext(AuthContext)
@@ -16,7 +17,8 @@ const Discussion = () => {
     const [discussionToggle, setDiscussionToggle] = useState(false)
     const [openId, setOpenId] = useState(0)
     const [deleteId, setDeleteId] = useState(0)
-    
+
+
     useEffect(() => {
         getDiscussions({auth})
         .then(response => {
@@ -33,6 +35,7 @@ const Discussion = () => {
             console.log(response.data)
         })
     }, [toggle])
+
 
 
     const submitDeleteDiscussion = ({discussion}) => {
@@ -94,7 +97,7 @@ const Discussion = () => {
         if (open === true && discussion === openId) {
             return (
                 <div>
-                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'solid', color: 'goldenrod', padding: '10px', maxHeight: '300px', overflowY: "scroll" }}>
+                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'solid', color: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll" }}>
                         {comments && comments.filter(x => x.discussion.id === discussion).map(comment => {
                             return (
                                 <div key={comment.id}>

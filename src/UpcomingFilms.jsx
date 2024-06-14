@@ -12,6 +12,9 @@ const UpcomingFilms = () => {
   const [films, setFilms] = useState([])
   const [edit, setEdit] = useState(false)
   const [editId, setEditId] = useState(0)
+  const [deleteId, setDeleteId] = useState(0)
+  const [deleteCheck, setDeleteCheck] = useState(false)
+  const [filmToggle, setFilmToggle] = useState(false)
   
   useEffect(() => {
     getFilms({auth})
@@ -19,14 +22,32 @@ const UpcomingFilms = () => {
       console.log(response)
       setFilms(response.data)
     }) 
-  }, [])
+  }, [filmToggle])
 
 
-  const Delete = ({id}) => {
+  const submitDeleteFilm = ({id}) => {
+    if (deleteCheck === true && deleteId === id) {
+        deleteFilm({auth, user, admin, id})
+        setFilmToggle(filmToggle => !filmToggle)
+    }
+    setDeleteCheck(deleteCheck => !deleteCheck)
+    
+  }
+
+
+  const DeleteCheck = ({id}) => {
+    if (deleteCheck === true && deleteId === id) {
+        return (
+            <p style={{ margin: '10px' }}>Are you sure you want to delete?</p>
+        )
+    }
+  }
+
+  const DeleteFilmButton = ({id}) => {
     if (admin === true) {
         return (
-            <button style={{ margin: '10px', marginLeft: '5px' }}
-                onClick={() => {deleteFilm({auth, user, admin, id})}}
+            <button style={{ margin: '10px', marginLeft: '5px', backgroundColor: 'red' }}
+                onClick={() => {submitDeleteFilm({id}); setDeleteId(id)}}
             >Delete</button>
         )
     }
@@ -91,7 +112,8 @@ const UpcomingFilms = () => {
               <h5 className="d-flex justify-content-center"> {film.title}</h5>
               <p className="d-flex justify-content-center">Coming {film.release_date}</p>
               <EditButton id={film.id}/>
-              <Delete id={film.id} />
+              <DeleteFilmButton id={film.id} />
+              <DeleteCheck id={film.id} />
               <EditPanel name={film.title} id={film.id} date={film.release_date} />
           </div>
         ))}
