@@ -11,7 +11,8 @@ const Posts = () => {
     const [edit, setEdit] = useState(false)
     const [editId, setEditId] = useState(0)
     const [toggle, setToggle] = useState(false)
-    
+    const [deleteId, setDeleteId] = useState(0)
+    const [deleteCheck, setDeleteCheck] = useState(false)
 
 
     useEffect(() => {
@@ -24,11 +25,27 @@ const Posts = () => {
     }, [toggle])
 
 
-    const Delete = ({id}) => {
+    const submitDeletePost = ({id}) => {
+        if (deleteCheck === true && deleteId === id) {
+            deletePost({auth, user, admin, id})
+        }
+        setDeleteCheck(deleteCheck => !deleteCheck)
+    }
+
+
+    const DeleteCheck = ({id}) => {
+        if (deleteCheck === true && deleteId === id) {
+            return (
+                <p style={{ margin: '10px' }}>Are you sure you want to delete?</p>
+            )
+        }
+    }
+
+
+    const DeletePostButton = ({id}) => {
         if (admin === true) {
             return (
-                <button style={{ margin: '10px', marginLeft: '5px' }}
-                    onClick={() => {deletePost({auth, user, admin, id})}}
+                <button style={{ margin: '10px', marginLeft: '5px', backgroundColor: "red"}} onClick={() => {submitDeletePost({id}); setDeleteId(id)}}
                 >Delete</button>
             )
         }
@@ -94,7 +111,8 @@ const Posts = () => {
                     <p style ={{ margin: '10px' }}>{post.content}</p>
                     <LikesButton post={post.id} likesCount={post.likes_count}/>
                     <EditButton id={post.id}/>
-                    <Delete id={post.id} />
+                    <DeletePostButton id={post.id} />
+                    <DeleteCheck id={post.id}/>
                     <EditPanel content={post.content} id={post.id} image={post.image} />
                 </div>
             ))}

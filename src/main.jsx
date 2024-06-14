@@ -21,7 +21,7 @@ import UpcomingFilms from './UpcomingFilms.jsx'
 import Menu from './Menu.jsx'
 import Polls from './Polls.jsx'
 import Discussion from './Discussion.jsx'
-
+import Protected from './protectedroute.jsx'
 
 
 function Layout() {
@@ -42,33 +42,38 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: '/',
-        element: <App />
-      },
-      {
         path: '/login',
         element: <Login />
       },
       {
-        path: '/showtimes',
-        element: <Showtimes />
+        element: <Protected />,
+        children: [
+          {
+            path: '/',
+            element: <App />
+          },
+          {
+            path: '/showtimes',
+            element: <Showtimes />
+          },
+          {
+            path: '/upcomingfilms',
+            element: <UpcomingFilms />
+          },
+          {
+            path: '/menu',
+            element: <Menu />
+          },
+          {
+            path: 'polls',
+            element: <Polls />
+          },
+          {
+            path: 'discussion',
+            element: <Discussion />
+          }
+        ]  
       },
-      {
-        path: '/upcomingfilms',
-        element: <UpcomingFilms />
-      },
-      {
-        path: '/menu',
-        element: <Menu />
-      },
-      {
-        path: 'polls',
-        element: <Polls />
-      },
-      {
-        path: 'discussion',
-        element: <Discussion />
-      }
     ]
   }
 ])
