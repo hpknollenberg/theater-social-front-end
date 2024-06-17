@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 
-// export const baseUrl = "http://127.0.0.1:8000"
-export const baseUrl = "https://project-theater.fly.dev"
+export const baseUrl = "http://127.0.0.1:8000"
+// export const baseUrl = "https://project-theater.fly.dev"
 
 
 export const createComment = ({auth, user, content, discussion}) => {
@@ -57,6 +57,24 @@ export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage })
     }
   }).then((response) => {return response})
 }
+
+
+export const createMenuItem = ({ auth, admin, name, category, price }) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-menu-item`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      is_admin: admin,
+      name: name,
+      category: category,
+      price: price
+    }
+  })
+}
+
 
 export const createPoll = ({ auth, user, admin, title, choices, pollId }) => {
   return axios({
@@ -303,12 +321,14 @@ export const getFilms = ({ auth }) => {
 }
 
 
-export const getMenu = () => {
+export const getMenuItems = ({ auth }) => {
   return axios({
     method: 'get',
-    url: `https://raw.githubusercontent.com/hpknollenberg/showtimes/main/menu.json`
+    url: `${baseUrl}/get-menu-items/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
   })
-  .then(response => {console.log("MENU: ", response); return response})
 }
 
 

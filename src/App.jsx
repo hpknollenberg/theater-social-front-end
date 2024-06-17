@@ -20,7 +20,6 @@ function App() {
       setLastName(response.data.last_name)
       setAdmin(response.data.is_admin)
       setUser(response.data.id)
-      console.log("Profile: ", response)
     })
   }, [auth.accessToken])
 
