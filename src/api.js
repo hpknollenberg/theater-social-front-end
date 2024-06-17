@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 
-// export const baseUrl = "http://127.0.0.1:8000"
-export const baseUrl = "https://project-theater.fly.dev"
+export const baseUrl = "http://127.0.0.1:8000"
+// export const baseUrl = "https://project-theater.fly.dev"
 
 
 export const createComment = ({auth, user, content, discussion}) => {
@@ -263,6 +263,25 @@ export const editFilm = ({ auth, user, admin, id, editFilmName, editDate, editFi
       title: editFilmName,
       release_date: editDate,
       image: editFilmImage,
+    }
+  })
+}
+
+
+export const editMenuItem = ({auth, admin, editCategory, editName, editPrice, editId}) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/edit-menu-item/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      category: editCategory,
+      name: editName,
+      price: editPrice,
+      menu_item: editId
     }
   })
 }
