@@ -5,11 +5,13 @@ import { getMenu } from "./api"
 
 const Menu = () => {  
   const [menu, setMenu] = useState([])
+  const [drinkMenu, setDrinkMenu] = useState([])
 
   useEffect(() => {
     getMenu()
     .then((response) => {
       setMenu(response.data.menu)
+      setDrinkMenu(response.data.drink_menu)
     })
   }, [])
 
@@ -27,12 +29,18 @@ const Menu = () => {
             <p>Medium: ${item.medium}</p>
             <p>Large: ${item.large}</p>
             <hr />
-            
           </div>
         )
         )}
       </div>
-      
+      <div style={{ margin: "10px"}}>
+        <h3>Beer</h3>
+        {drinkMenu && drinkMenu.map(drink => (
+          <div>
+            {drink.name} - ${drink.price}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
