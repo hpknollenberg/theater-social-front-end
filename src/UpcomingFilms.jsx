@@ -19,7 +19,6 @@ const UpcomingFilms = () => {
   useEffect(() => {
     getFilms({auth})
     .then((response) => {
-      console.log(response)
       setFilms(response.data)
     }) 
   }, [filmToggle])

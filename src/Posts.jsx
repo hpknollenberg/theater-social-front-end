@@ -25,6 +25,7 @@ const Posts = () => {
     }, [toggle])
 
 
+
     const submitDeletePost = ({id}) => {
         if (deleteCheck === true && deleteId === id) {
             deletePost({auth, user, admin, id})

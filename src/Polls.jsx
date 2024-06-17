@@ -14,12 +14,13 @@ const Polls = () => {
   const [selectedPoll, setSelectedPoll] = useState([])
   const [greyedOut, setGreyedOut] = useState([])
   const [toggle, setToggle] = useState(true)
+  const [deleteId, setDeleteId] = useState(0)
+  const [deleteCheck, setDeleteCheck] = useState(false)
 
 
   useEffect(() => {
       getProfileVotes({ auth })
       .then(response => {
-        console.log("response: ", response.data)
         response.data.map((vote) => {
           if (!greyedOut.includes(vote.poll.id)) {
             setGreyedOut((greyedOut) => [...greyedOut, vote.poll.id])
@@ -29,7 +30,6 @@ const Polls = () => {
       .then(() => {
         getPolls({auth})
         .then(response => {
-          console.log("Poll: ", response)
           setPolls(response.data)
         })
       })
@@ -40,11 +40,28 @@ const Polls = () => {
     const [selectedOption, setSelectedOption] = useState("")
 
 
+    const submitDeletePost = ({poll}) => {
+        if (deleteCheck === true && deleteId === poll) {
+            deletePoll({auth, user, admin, poll})
+            setToggle(toggle => !toggle)
+        }
+        setDeleteCheck(deleteCheck => !deleteCheck)
+    }
+
+
+    const DeleteCheck = ({poll}) => {
+      if (deleteCheck === true && deleteId === poll) {
+          return (
+              <p style={{ margin: '10px' }}>Are you sure you want to delete?</p>
+          )
+      }
+    }
+
     const DeleteButton = ({poll}) => {
       if (admin === true) {
         return(
-          <div style={{ margin: '10px' }}>
-            <button onClick={() => {console.log(poll); deletePoll({auth, user, admin, poll})}}>Delete Poll</button>
+          <div style={{ marginTop: '10px' }}>
+            <button style={{backgroundColor: 'red'}} onClick={() => {submitDeletePost({poll}); setDeleteId(poll)}}>Delete Poll</button>
           </div>
         )
       }
@@ -65,7 +82,6 @@ const Polls = () => {
     return (
       <div>
       {polls && polls.map((poll, index) => {
-        console.log("greyed out: ", greyedOut)
         if (!greyedOut.includes(poll.id) && admin !== true) {
           return (
           <div key={index} style={{ margin: '10px'}}>
@@ -79,7 +95,6 @@ const Polls = () => {
               </div>
             ))}
             <button style={{ margin: '10px' }} onClick={() => {submitPoll()}}>Submit Poll</button>
-            <DeleteButton poll={poll.id}/>
             <hr></hr>
           </div>
       )} else {
@@ -92,6 +107,7 @@ const Polls = () => {
               </div>
             ))}
             <DeleteButton poll={poll.id}/>
+            <DeleteCheck poll={poll.id}/>
             <hr></hr>
           </div>
       )

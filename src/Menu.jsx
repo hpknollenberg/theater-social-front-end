@@ -1,19 +1,29 @@
 import Tabs from "./Tabs"
-import { useEffect, useState } from "react"
-import { getMenu } from "./api"
-
+import { useContext, useEffect, useState } from "react"
+import { getMenuItems } from "./api"
+import { AuthContext } from "./context"
 
 const Menu = () => {  
   const [menu, setMenu] = useState([])
   const [drinkMenu, setDrinkMenu] = useState([])
+  const { auth } = useContext(AuthContext)
+  const [categories, setCategories] = useState([])
+  let categoriesTemp = []
 
   useEffect(() => {
-    getMenu()
+    getMenuItems({ auth })
     .then((response) => {
-      setMenu(response.data.menu)
-      setDrinkMenu(response.data.drink_menu)
+      setMenu(response.data)
+      response.data.map((item) => {
+        if (!categoriesTemp.includes(item.category)) {
+          categoriesTemp.push(item.category)
+          setCategories((categories) => [...categories, item.category])
+        }
+      })
     })
+    .then(console.log(categories))
   }, [])
+
 
   return (
     <div className='' >
@@ -22,19 +32,22 @@ const Menu = () => {
         <Tabs activeTab="menu"/>
       </div>
       <div>
-        {menu && menu.map(item => (
-          <div style={{ margin: '10px'}}>
-            <h3>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</h3>
-            <p>Small: ${item.small}</p>
-            <p>Medium: ${item.medium}</p>
-            <p>Large: ${item.large}</p>
-            <hr />
-          </div>
-        )
-        )}
-      </div>
+        {categories && categories.map((category, index) => {
+          return (
+            <div key={index}>
+              <h3 style={{ margin: '10px' }}>{category}</h3>
+              <div style={{ margin: '10px' }}>
+              {menu && menu.filter(x => x.category === category).map(item => (
+                <div key={item.id} style={{ margin: '10px'}}>
+                  {item.name} - ${item.price}
+                </div>
+                ))}
+              </div>
+            </div>
+          )
+        })}     
+        </div>
       <div style={{ margin: "10px"}}>
-        <h3>Beer</h3>
         {drinkMenu && drinkMenu.map(drink => (
           <div>
             {drink.name} - ${drink.price}
