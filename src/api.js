@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 
-export const baseUrl = "http://127.0.0.1:8000"
-// export const baseUrl = "https://project-theater.fly.dev"
+// export const baseUrl = "http://127.0.0.1:8000"
+export const baseUrl = "https://project-theater.fly.dev"
 
 
 export const createComment = ({auth, user, content, discussion}) => {
@@ -59,18 +59,19 @@ export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage })
 }
 
 
-export const createMenuItem = ({ auth, admin, name, category, price }) => {
+export const createMenuItem = ({ auth, admin, itemName, itemCategory, itemPrice }) => {
   return axios({
     method: 'post',
-    url: `${baseUrl}/create-menu-item`,
+    url: `${baseUrl}/create-menu-item/`,
     headers: {
       Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
     },
     data: {
       is_admin: admin,
-      name: name,
-      category: category,
-      price: price
+      name: itemName,
+      category: itemCategory,
+      price: itemPrice
     }
   })
 }
@@ -197,6 +198,21 @@ export const deleteFilm = ({ auth, user, admin, id }) => {
     }
   })
 } 
+
+
+export const deleteMenuItem = ({ auth, admin, deleteId }) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-menu-item/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      is_admin: admin,
+      menu_item: deleteId
+    }
+  })
+}
 
 
 export const deletePoll = ({ auth, user, admin, poll }) => {
