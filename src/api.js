@@ -2,7 +2,10 @@ import axios from 'axios'
 
 
 // export const baseUrl = "http://127.0.0.1:8000"
-export const baseUrl = "https://project-theater.fly.dev"
+// export const baseUrl = "https://project-theater.fly.dev"
+
+export const baseUrl = import.meta.env.VITE_BASE_URL
+console.log(baseUrl)
 
 
 export const createComment = ({auth, user, content, discussion}) => {
