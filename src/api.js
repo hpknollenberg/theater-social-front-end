@@ -116,6 +116,26 @@ export const createPost = ({ auth, user, admin, postMessage, postImage }) => {
 }
 
 
+export const createShowtime = ({ auth, admin, showtimes, date, film, id, timeIds}) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-showtime/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      showtimes: JSON.stringify(showtimes),
+      date: date,
+      film: film,
+      id: id,
+      time_ids: JSON.stringify(timeIds)
+    }
+  })
+}
+
+
 export const createUser = ({ username, password, firstName, lastName}) => {
     return axios({
       method: 'post',
@@ -243,6 +263,38 @@ export const deletePost = ({ auth, user, admin, id }) => {
       author: user,
       is_admin: admin,
       post: id
+    }
+  })
+}
+
+
+export const deleteShowtime = ({ auth, admin, id}) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-showtime/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      id: id,
+    }
+  })
+}
+
+
+export const deleteShowtimesDay = ({ auth, admin, day}) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-showtime-day/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      day: day
     }
   })
 }
@@ -401,10 +453,13 @@ export const getProfileVotes = ({ auth }) => {
 }
 
 
-export const getShowtimes = () => {
+export const getShowtimes = ({auth}) => {
   return axios({
     method: 'get',
-    url: `https://raw.githubusercontent.com/hpknollenberg/showtimes/main/showtimes.json`
+    url: `${baseUrl}/get-showtimes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
   })
   .then(response => {console.log("SHOWTIMES: ", response); return response})
 }
