@@ -33,6 +33,7 @@ const Discussion = () => {
         getComments({auth})
         .then(response => {
             setComments(response.data)
+            console.log(response.data)
         })
     }, [toggle])
 
@@ -108,7 +109,6 @@ const Discussion = () => {
 
     const submitLike = (comment) => {
         updateCommentLikes({ auth, comment })
-        .then(() => setToggle(toggle => !toggle))
     }
 
 
@@ -130,12 +130,14 @@ const Discussion = () => {
                 <div>
                     <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll"}} >
                         {comments && comments.filter(x => x.discussion.id === discussion).map(comment => {
+                            const [alreadyLiked, setAlreadyLiked] = useState(comment.likes.includes(user) ? true : false)
+                            const [liked, setLiked] = useState(false)
                             return (
                                 <div key={comment.id}>
                                     <h6>{comment.author.first_name}</h6>
-                                    <p style={{color: 'white'}}>{comment.content}</p>
-                                    <p>Likes: {comment.likes_count}</p>
-                                    <button onClick={() => submitLike(comment.id)}>Like</button>
+                                    <p>{comment.content}</p>
+                                    <p>Likes: {liked && !alreadyLiked ? comment.likes_count + 1 : (liked && alreadyLiked ? comment.likes_count - 1 : comment.likes_count)}</p>
+                                    <button onClick={() => {submitLike(comment.id); setLiked(liked => !liked)}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}}>Like</button>
                                     <DeleteCommentButton comment={comment.id} author={comment.author.id} />
                                     <DeleteCommentCheck comment={comment.id}/>
                                     <hr></hr>
