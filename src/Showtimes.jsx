@@ -21,6 +21,7 @@ const Showtimes = () => {
     getShowtimes({auth})
     .then((response) => {
       setShowtimes(response.data)
+      setShowtimeDate(response.data[0].date)
       let tempDates = []
       response.data.map(showtime => {
         if (!tempDates.includes(showtime.date) && !dates.includes(showtime.date)) {
