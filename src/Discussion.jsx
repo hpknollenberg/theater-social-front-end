@@ -116,7 +116,7 @@ const Discussion = () => {
 
         return (
             <div style={{ margin: '10px' }}>
-                <textarea style={{ width: '300px', height: '100px'}} onChange={e => setContent(e.target.value)}></textarea>
+                <textarea style={{width: '300px', height: '100px'}} onChange={e => setContent(e.target.value)}></textarea>
                 <button style={{ margin: '10px'}} onClick={() => submitComment({discussion, content})}>Send Message</button>
             </div>
         )
@@ -135,8 +135,8 @@ const Discussion = () => {
                                 <div key={comment.id}>
                                     <h6>{comment.author.first_name}</h6>
                                     <p>{comment.content}</p>
-                                    <p>Likes: {liked && !alreadyLiked ? comment.likes_count + 1 : (liked && alreadyLiked ? comment.likes_count - 1 : comment.likes_count)}</p>
-                                    <button onClick={() => {submitLike(comment.id); setLiked(liked => !liked)}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}}>Like</button>
+                                    <p><button onClick={() => {submitLike(comment.id); setLiked(liked => !liked)}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`, marginRight: '5px'}}>Like</button> 
+                                    Likes: {liked && !alreadyLiked ? comment.likes_count + 1 : (liked && alreadyLiked ? comment.likes_count - 1 : comment.likes_count)}</p>
                                     <DeleteCommentButton comment={comment.id} author={comment.author.id} />
                                     <DeleteCommentCheck comment={comment.id}/>
                                     <hr></hr>
@@ -187,7 +187,9 @@ const Discussion = () => {
             </div>
             <div>
                 <DiscussionUpload />
-                <DiscussionPosts />
+                <div style={{ maxWidth: '1000px'}}>
+                    <DiscussionPosts />
+                </div>
             </div>
         </div>
     )
