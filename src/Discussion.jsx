@@ -1,6 +1,6 @@
 import Tabs from "./Tabs"
 import DiscussionUpload from "./DiscussionUpload"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { AdminContext, AuthContext, UserContext } from "./context"
 import { baseUrl, getDiscussions, createComment, getComments, updateCommentLikes, deleteDiscussion, deleteComment } from "./api"
 
@@ -25,7 +25,6 @@ const Discussion = () => {
         getDiscussions({auth})
         .then(response => {
             setDiscussions(response.data)
-            console.log(response.data)
         })
     }, [discussionToggle])
 
@@ -34,7 +33,6 @@ const Discussion = () => {
         getComments({auth})
         .then(response => {
             setComments(response.data)
-            console.log(response.data)
         })
     }, [toggle])
 
@@ -130,7 +128,7 @@ const Discussion = () => {
         if (open === true && discussion === openId) {
             return (
                 <div>
-                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'solid', borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll" }}>
+                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll"}} >
                         {comments && comments.filter(x => x.discussion.id === discussion).map(comment => {
                             return (
                                 <div key={comment.id}>
@@ -161,7 +159,7 @@ const Discussion = () => {
             <div>
                 {discussions && discussions.map((discussion) => {
                     return (
-                        <div style={{ margin: '10px', marginBottom: "25px", borderStyle: 'solid', borderColor: 'goldenrod', padding: '10px'}}>
+                        <div style={{ margin: '10px', marginBottom: "25px", borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px'}}>
                             <div style={{ display: "flex", alignItems: "center", margin: '10px'}}>
                                 <img src={`${baseUrl}${discussion.image}`} style={{maxHeight: '200px'}} />
                                 <div style={{ margin: '10px' }}>

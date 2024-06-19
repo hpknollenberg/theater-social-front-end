@@ -80,11 +80,11 @@ const Polls = () => {
       })}
 
     return (
-      <div>
+      <div className='d-flex flex-wrap'>
       {polls && polls.map((poll, index) => {
         if (!greyedOut.includes(poll.id) && admin !== true) {
           return (
-          <div key={index} style={{ margin: '10px'}}>
+          <div key={index} style={{ margin: '10px', marginRight: '50px'}}>
             <h5>{poll.name}</h5>
             {poll.choices && poll.choices.map((choice, index) => (
               <div key={index}>
@@ -99,7 +99,7 @@ const Polls = () => {
           </div>
       )} else {
         return (
-          <div key={index} style={{ margin: '10px'}}>
+          <div key={index} style={{ margin: '10px', marginLeft: '50px'}}>
             <h5>{poll.name}</h5>
             {poll.choices && poll.choices.map((choice, index) => (
               <div key={index}>

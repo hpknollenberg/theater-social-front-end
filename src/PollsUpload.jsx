@@ -22,8 +22,9 @@ const PollsUpload = () => {
             <input type="text" style={{ margin: '10px'}} value={title} onChange={(e) => {setTitle(e.target.value)}}/></p>
           </div>
           <div>
+            <p style={{ margin: '10px'}}>Choice:
             <input type="text" style={{ margin: '10px'}} value={currentChoice} onChange={(e) => {setCurrentChoice(e.target.value)}}/>
-            <button onClick={() => {setChoices([...choices, currentChoice])}}>Add Choice</button>
+            <button onClick={() => {setChoices([...choices, currentChoice])}}>Add</button></p>
           </div>
           <div>
             <h5 style={{ margin: '10px'}}>PREVIEW:</h5>
