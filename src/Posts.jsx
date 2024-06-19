@@ -95,28 +95,31 @@ const Posts = () => {
     }
 
 
-    const LikesButton = ({post, likesCount}) => {
+    const LikesButton = ({post, likesCount, postObject}) => {
+        const [liked, setLiked] = useState(false)
+        const [alreadyLiked, setAlreadyLiked] = useState(postObject.likes.includes(user) ? true : false)
         return (
             <div>
-                <button style={{margin: "10px"}} onClick={() => {updateLikes({auth, post}).then(() => setToggle(toggle => !toggle))}}>Like</button>
-                Likes: {likesCount}
+                <button style={{margin: "10px", backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}} onClick={() => {updateLikes({auth, post}); setLiked(liked => !liked)}} >Like</button>
+                Likes: {liked && !alreadyLiked ? likesCount + 1 : (liked && alreadyLiked ? likesCount - 1 : likesCount)}
             </div>
         )
     }
 
     return (
         <div className="d-flex flex-wrap align-items-start">
-            {posts && posts.map(post => (
+            {posts && posts.map(post => {
+                return (
                 <div className="" key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'dashed', borderColor: 'goldenrod'}}>
                     <Image image={post.image} />
                     <p style ={{ margin: '10px' }}>{post.content}</p>
-                    <LikesButton post={post.id} likesCount={post.likes_count}/>
+                    <LikesButton post={post.id} likesCount={post.likes_count} postObject={post}/>
                     <EditButton id={post.id}/>
                     <DeletePostButton id={post.id} />
                     <DeleteCheck id={post.id}/>
                     <EditPanel content={post.content} id={post.id} image={post.image} />
                 </div>
-            ))}
+            )})}
         </div>
         )
 }
