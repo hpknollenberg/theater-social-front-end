@@ -95,10 +95,10 @@ const Menu = () => {
         <Tabs activeTab="menu"/>
       </div>
       <MenuUpload />
-      <div>
+      <div style={{ maxWidth: "1000px" }} className="d-flex flex-wrap">
         {categories && categories.map((category, index) => {
           return (
-            <div key={index}>
+            <div style={{margin: '10px', marginRight: '50px' }}key={index}>
               <h3 style={{ margin: '10px' }}>{category}</h3>
               <div style={{ margin: '10px' }}>
               {menu && menu.filter(x => x.category === category).map(item => (
