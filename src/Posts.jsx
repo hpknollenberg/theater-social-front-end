@@ -105,9 +105,9 @@ const Posts = () => {
     }
 
     return (
-        <div>
+        <div className="d-flex flex-wrap align-items-start">
             {posts && posts.map(post => (
-                <div key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'solid', borderColor: 'goldenrod'}}>
+                <div className="" key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'dashed', borderColor: 'goldenrod'}}>
                     <Image image={post.image} />
                     <p style ={{ margin: '10px' }}>{post.content}</p>
                     <LikesButton post={post.id} likesCount={post.likes_count}/>

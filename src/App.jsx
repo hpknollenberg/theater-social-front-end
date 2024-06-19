@@ -30,7 +30,7 @@ function App() {
         <h1 className="p-5">The Kentucky Theater</h1>
         <Tabs activeTab="feed" />
       </div>
-      <div>
+      <div className="">
         <PostUpload />
         <Posts />
       </div>
