@@ -17,11 +17,15 @@ const Tabs = ({activeTab}) => {
                     <a className={`nav-link ${(activeTab === "menu" ? "active" : "")}`} href="/menu" style={{color: `${(activeTab === "menu") ? "black" : "white"}` }}>Menu</a>
                 </li>
                 <li className="nav-item">
+                    <a className={`nav-link ${(activeTab === "events" ? "active" : "")}`} href="/events" style={{color: `${(activeTab === "events") ? "black" : "white"}` }}>Events</a>
+                </li>
+                <li className="nav-item">
                     <a className={`nav-link ${(activeTab === "polls" ? "active" : "")}`} href="/polls" style={{color: `${(activeTab === "polls") ? "black" : "white"}` }}>Polls</a>
                 </li>
                 <li className="nav-item">
                     <a className={`nav-link ${(activeTab === "discussion" ? "active" : "")}`} href="/discussion" style={{color: `${(activeTab === "discussion") ? "black" : "white"}` }}>Discussion</a>
                 </li>
+                
             </ul>
         </div>
     )

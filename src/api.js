@@ -43,6 +43,26 @@ export const createDiscussion = ({auth, user, admin, title, description, image})
 }
 
 
+export const createEvent = ({ auth, admin, title, description, date, time, image }) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-event/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      title: title,
+      description: description,
+      date: date,
+      time: time,
+      image: image
+    }
+  })
+}
+
+
 export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage }) => {
   return axios({
     method: 'post',
@@ -393,6 +413,17 @@ export const getDiscussions = ({ auth }) => {
   return axios({
     method: 'get',
     url: `${baseUrl}/get-discussions`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
+export const getEvents = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-events`,
     headers: {
       Authorization: `Bearer ${auth.accessToken}`
     }
