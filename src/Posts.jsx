@@ -80,7 +80,7 @@ const Posts = () => {
                 <textarea style={{ height: '100px', width: '95%', margin: "10px" }} onChange={e => setEditMessage(e.target.value)}>{content}</textarea>
                 <div>
                     <input style={{ margin: '10px', width: '275px' }} type="file" accept='image/*' onChange={e => setEditImage(e.target.files[0])} />
-                    <button style={{ margin: '10px' }} onClick={() => {editPost({auth, user, admin, id, editMessage, editImage}).then(()=> {setEdit(edit => !edit); setUniversalToggle(universalToggle => !universalToggle)})}}>Submit Edits</button>
+                    <button style={{ margin: '10px' }} onClick={() => {editPost({auth, user, admin, id, editMessage, editImage}).then(()=> {setUniversalToggle(universalToggle => !universalToggle)})}}>Submit Edits</button>
                 </div>
             </div>
             )
