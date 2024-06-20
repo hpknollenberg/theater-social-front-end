@@ -1,7 +1,7 @@
 import Tabs from "./Tabs"
 import DiscussionUpload from "./DiscussionUpload"
 import { useContext, useEffect, useRef, useState } from "react"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import { baseUrl, getDiscussions, createComment, getComments, updateCommentLikes, deleteDiscussion, deleteComment } from "./api"
 
 
@@ -19,6 +19,7 @@ const Discussion = () => {
     const [deleteId, setDeleteId] = useState(0)
     const [deleteCommentId, setDeleteCommentId] = useState(0)
     const [deleteCommentCheck, setDeleteCommentCheck] = useState(false)
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const Discussion = () => {
         .then(response => {
             setDiscussions(response.data)
         })
-    }, [discussionToggle])
+    }, [discussionToggle, universalToggle])
 
 
     useEffect(() => {
