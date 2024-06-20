@@ -576,3 +576,17 @@ export const updateLikes = ({ auth, post }) => {
     }
   })
 }
+
+
+export const updateRsvp = ({ auth, event }) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/update-rsvp/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      event
+    }
+  })
+}
