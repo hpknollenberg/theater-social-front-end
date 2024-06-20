@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { AdminContext, AuthContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext } from "./context"
 import { createMenuItem } from "./api"
 
 const MenuUpload = () => {
@@ -8,11 +8,15 @@ const MenuUpload = () => {
     const [itemCategory, setItemCategory] = useState("")
     const [itemName, setItemName] = useState("")
     const [itemPrice, setItemPrice] = useState(0)
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
 
     const submitMenuItem = () => {
         createMenuItem({auth, admin, itemCategory, itemName, itemPrice})
+        .then(() => {
+            setUniversalToggle(universalToggle => !universalToggle)
+        })
     }
 
 

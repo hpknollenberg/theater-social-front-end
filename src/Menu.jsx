@@ -1,7 +1,7 @@
 import Tabs from "./Tabs"
 import { useContext, useEffect, useState } from "react"
 import { deleteMenuItem, editMenuItem, getMenuItems } from "./api"
-import { AdminContext, AuthContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext } from "./context"
 import MenuUpload from "./MenuUpload"
 
 const Menu = () => {  
@@ -15,7 +15,7 @@ const Menu = () => {
   const [editCheck, setEditCheck] = useState(false)
   const [editId, setEditId] = useState(0)
   const [toggle, setToggle] = useState(false)
-  
+  const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
   
   
   useEffect(() => {
@@ -31,13 +31,14 @@ const Menu = () => {
       })
     })
     .then(console.log(categories))
-  }, [toggle])
+  }, [toggle, universalToggle])
 
 
   const deleteSubmit = ({id}) => {
     if (deleteCheck === true && id === deleteId) {
       deleteMenuItem({auth, admin, deleteId})
-      setToggle(!toggle)
+      .then(()=> setToggle(toggle => !toggle))
+      
     }
     setDeleteCheck(deleteCheck => !deleteCheck)
   }
@@ -80,7 +81,7 @@ const Menu = () => {
           <p style={{ margin: '10px' }} >Category: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditCategory(e.target.value)} value={editCategory}></input></p>
           <p style={{ margin: '10px' }}>Name: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditName(e.target.value)} value={editName}></input></p>
           <p style={{ margin: '10px' }}>Price: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditPrice(e.target.value)} value={editPrice}></input></p>
-          <button style={{ margin: '10px' }} onClick={() => {editMenuItem({auth, admin, editCategory, editName, editPrice, editId}); setToggle(!toggle)}}>Submit Edit</button>
+          <button style={{ margin: '10px' }} onClick={() => {editMenuItem({auth, admin, editCategory, editName, editPrice, editId}).then(() => setToggle(toggle => !toggle))}}>Submit Edit</button>
           <hr />
         </div>
       )
