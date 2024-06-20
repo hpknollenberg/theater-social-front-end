@@ -1,5 +1,5 @@
 import { createFilm } from "./api"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import { useContext, useState } from "react"
 
 
@@ -10,6 +10,7 @@ const UpcomingFilmsUpload = () => {
     const [filmDate, setFilmDate] = useState("")
     const [filmName, setFilmName] = useState("")
     const [filmImage, setFilmImage] = useState("")
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
     const submitFilm = () => {
@@ -21,6 +22,9 @@ const UpcomingFilmsUpload = () => {
             filmName,
             filmImage
         })
+        .then(() => {
+            setUniversalToggle(universalToggle => !universalToggle)
+        }) 
     }
 
 

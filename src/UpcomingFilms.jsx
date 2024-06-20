@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react"
 import Tabs from "./Tabs"
 import UpcomingFilmsUpload from "./UpcomingFilmsUpload"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import { baseUrl, getFilms, editFilm, deleteFilm } from "./api"
 
 
@@ -15,19 +15,20 @@ const UpcomingFilms = () => {
   const [deleteId, setDeleteId] = useState(0)
   const [deleteCheck, setDeleteCheck] = useState(false)
   const [filmToggle, setFilmToggle] = useState(false)
+  const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
   
   useEffect(() => {
     getFilms({auth})
     .then((response) => {
       setFilms(response.data)
     }) 
-  }, [filmToggle])
+  }, [filmToggle, universalToggle])
 
 
   const submitDeleteFilm = ({id}) => {
     if (deleteCheck === true && deleteId === id) {
         deleteFilm({auth, user, admin, id})
-        setFilmToggle(filmToggle => !filmToggle)
+        .then(() => {setFilmToggle(filmToggle => !filmToggle)})
     }
     setDeleteCheck(deleteCheck => !deleteCheck)
     
@@ -88,7 +89,7 @@ const UpcomingFilms = () => {
             </div>
             <div>
                 <input style={{ margin: '10px', width: '275px' }} type="file" accept='image/*' onChange={e => setEditFilmImage(e.target.files[0])} />
-                <button style={{ margin: '10px' }} onClick={() => {editFilm({auth, user, admin, id, editFilmName, editDate, editFilmImage})}}>Submit Edits</button>
+                <button style={{ margin: '10px' }} onClick={() => {editFilm({auth, user, admin, id, editFilmName, editDate, editFilmImage}).then(() => setUniversalToggle(universalToggle => !universalToggle))}}>Submit Edits</button>
             </div>
         </div>
       )
