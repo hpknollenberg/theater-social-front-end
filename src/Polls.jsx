@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import PollsUpload from "./PollsUpload"
 import Tabs from "./Tabs"
 import { getPolls, createVote, deletePoll, getProfileVotes } from "./api"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 
 
 
@@ -16,7 +16,7 @@ const Polls = () => {
   const [toggle, setToggle] = useState(true)
   const [deleteId, setDeleteId] = useState(0)
   const [deleteCheck, setDeleteCheck] = useState(false)
-
+  const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
   useEffect(() => {
       getProfileVotes({ auth })
@@ -33,7 +33,7 @@ const Polls = () => {
           setPolls(response.data)
         })
       })
-  }, [toggle])
+  }, [toggle, universalToggle])
   
 
   const IndividualPoll = () => {
@@ -43,7 +43,7 @@ const Polls = () => {
     const submitDeletePost = ({poll}) => {
         if (deleteCheck === true && deleteId === poll) {
             deletePoll({auth, user, admin, poll})
-            setToggle(toggle => !toggle)
+            .then(() => setToggle(toggle => !toggle))
         }
         setDeleteCheck(deleteCheck => !deleteCheck)
     }
