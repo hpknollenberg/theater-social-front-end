@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { AdminContext, AuthContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext } from "./context"
 import { v4 as uuidv4 } from 'uuid'
 import { createShowtime } from "./api"
 
@@ -13,6 +13,7 @@ const ShowtimesUpload = () => {
     const [film, setFilm] = useState("")
     const [id, setId] = useState(uuidv4())
     const [timeIds, setTimeIds] = useState([])
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
     if (admin === true) {
         return (
@@ -29,7 +30,7 @@ const ShowtimesUpload = () => {
                         )
                     })}
                 </p>
-                <button style={{ margin: '10px'}} onClick={() => {setId(uuidv4()); createShowtime({auth, admin, showtimes, date, film, id, timeIds})}}>Submit Showtimes</button>
+                <button style={{ margin: '10px'}} onClick={() => {setId(() => uuidv4()); createShowtime({auth, admin, showtimes, date, film, id, timeIds}).then(() => {setUniversalToggle(universalToggle => !universalToggle); setTimeIds([]); setShowtimes([])})}}>Submit Showtimes</button>
                 <hr />
             </div>
         )

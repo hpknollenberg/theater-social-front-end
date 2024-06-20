@@ -6,7 +6,7 @@ import {
   Outlet,
 } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { AuthContextProvider, UserContextProvider, AdminContextProvider } from './context'
+import { AuthContextProvider, UserContextProvider, AdminContextProvider, ToggleContextProvider } from './context'
 
 //project styles
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -86,11 +86,13 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <AdminContextProvider>
-    <UserContextProvider>
-      <AuthContextProvider>
-        <RouterProvider router={router} />
-      </AuthContextProvider>
-    </UserContextProvider>
-  </AdminContextProvider> 
+  <ToggleContextProvider>
+    <AdminContextProvider>
+      <UserContextProvider>
+        <AuthContextProvider>
+          <RouterProvider router={router} />
+        </AuthContextProvider>
+      </UserContextProvider>
+    </AdminContextProvider> 
+  </ToggleContextProvider>
 )

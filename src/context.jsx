@@ -67,3 +67,17 @@ export const AuthContextProvider = ({ children }) => {
       </AdminContext.Provider>
     )
   }
+
+
+
+  export const ToggleContext = createContext()
+
+  export const ToggleContextProvider = ({ children }) => {
+    const [universalToggle, setUniversalToggle] = useState(false)
+
+    return(
+      <ToggleContext.Provider value={{universalToggle, setUniversalToggle}}>
+        {children}
+      </ToggleContext.Provider>
+    )
+  }
