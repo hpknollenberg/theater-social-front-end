@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import { createDiscussion } from "./api"
 
 
@@ -10,10 +10,11 @@ const DiscussionUpload = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState("")
-
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
     const submitDiscussion = () => {
         createDiscussion({auth, user, admin, title, description, image})
+        .then(() => setUniversalToggle(universalToggle => !universalToggle))
     }
 
 
