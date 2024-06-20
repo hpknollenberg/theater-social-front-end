@@ -75,7 +75,7 @@ const Posts = () => {
         if (admin === true && edit === true && id === editId) {
             return (
             <div>
-                <textarea style={{ height: '100px', width: '375px', margin: "10px" }} onChange={e => setEditMessage(e.target.value)}>{content}</textarea>
+                <textarea style={{ height: '100px', width: '95%', margin: "10px" }} onChange={e => setEditMessage(e.target.value)}>{content}</textarea>
                 <div>
                     <input style={{ margin: '10px', width: '275px' }} type="file" accept='image/*' onChange={e => setEditImage(e.target.files[0])} />
                     <button style={{ margin: '10px' }} onClick={() => {editPost({auth, user, admin, id, editMessage, editImage})}}>Submit Edits</button>

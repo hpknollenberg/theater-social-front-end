@@ -69,17 +69,17 @@ const Menu = () => {
   }
 
 
-  const EditPanel = ({id}) => {
-    const [editName, setEditName] = useState("")
-    const [editCategory, setEditCategory] = useState("")
-    const [editPrice, setEditPrice] = useState("")
+  const EditPanel = ({id, name, category, price}) => {
+    const [editName, setEditName] = useState(name)
+    const [editCategory, setEditCategory] = useState(category)
+    const [editPrice, setEditPrice] = useState(price)
 
     if (admin === true && editCheck === true && editId === id) {
       return (
         <div>
-          <p style={{ margin: '10px' }} >Category: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditCategory(e.target.value)}></input></p>
-          <p style={{ margin: '10px' }}>Name: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditName(e.target.value)}></input></p>
-          <p style={{ margin: '10px' }}>Price: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditPrice(e.target.value)}></input></p>
+          <p style={{ margin: '10px' }} >Category: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditCategory(e.target.value)} value={editCategory}></input></p>
+          <p style={{ margin: '10px' }}>Name: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditName(e.target.value)} value={editName}></input></p>
+          <p style={{ margin: '10px' }}>Price: <input style={{ marginLeft: '5px'}} onChange={(e) => setEditPrice(e.target.value)} value={editPrice}></input></p>
           <button style={{ margin: '10px' }} onClick={() => {editMenuItem({auth, admin, editCategory, editName, editPrice, editId}); setToggle(!toggle)}}>Submit Edit</button>
           <hr />
         </div>
@@ -107,7 +107,7 @@ const Menu = () => {
                   <EditButton id={item.id}/>
                   <DeleteButton id={item.id}/>
                   <DeleteCheck id={item.id}/>
-                  <EditPanel id={item.id}/>
+                  <EditPanel id={item.id} name={item.name} category={item.category} price={item.price}/>
                 </div>
                 ))}
               </div>
