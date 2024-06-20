@@ -89,7 +89,9 @@ const Posts = () => {
     const Image = ({image}) => {
         if (image) {
             return (
-                <img src={`${baseUrl}${image}`} style={{ borderStyle: "", margin: '2.5%', maxWidth: "95%", color: 'white'}} />
+                <div className="d-flex justify-content-center">
+                    <img src={`${baseUrl}${image}`} style={{ borderStyle: "", margin: '2.5%', maxWidth: "95%", color: 'white'}} />
+                </div>
             )
         }
     }
@@ -99,7 +101,7 @@ const Posts = () => {
         const [liked, setLiked] = useState(false)
         const [alreadyLiked, setAlreadyLiked] = useState(postObject.likes.includes(user) ? true : false)
         return (
-            <div>
+            <div >
                 <button style={{margin: "10px", backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}} onClick={() => {updateLikes({auth, post}).then(() => setLiked(liked => !liked))}} >Like</button>
                 Likes: {liked && !alreadyLiked ? likesCount + 1 : (liked && alreadyLiked ? likesCount - 1 : likesCount)}
             </div>
@@ -110,9 +112,9 @@ const Posts = () => {
         <div className="d-flex flex-wrap align-items-start">
             {posts && posts.map(post => {
                 return (
-                <div className="" key={post.id} style={{ maxWidth: '400px', margin: '10px', marginBottom: '25px', borderStyle: 'dashed', borderColor: 'goldenrod'}}>
+                <div key={post.id} style={{maxWidth: '375px', margin: '10px', marginBottom: '25px', borderStyle: 'dashed', borderColor: 'goldenrod'}}>
                     <Image image={post.image} />
-                    <p style ={{ margin: '10px' }}>{post.content}</p>
+                    <p style ={{ margin: '10px'}}>{post.content}</p>
                     <LikesButton post={post.id} likesCount={post.likes_count} postObject={post}/>
                     <EditButton id={post.id}/>
                     <DeletePostButton id={post.id} />
