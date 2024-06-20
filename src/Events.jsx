@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import Tabs from "./Tabs"
-import { baseUrl, deleteEvent, editEvent, getEvents } from "./api"
-import { AdminContext, AuthContext } from "./context"
+import { baseUrl, deleteEvent, editEvent, getEvents, updateRsvp } from "./api"
+import { AdminContext, AuthContext, UserContext } from "./context"
 import EventsUpload from "./EventsUpload"
 import { DateTime } from "luxon"
 
@@ -13,6 +13,7 @@ const Events = () => {
     const [deleteId, setDeleteId] = useState(false)
     const [edit, setEdit] = useState(false)
     const [editId, setEditId] = useState(0)
+    const {user, setUser} = useContext(UserContext)
     
     
     useEffect(() => {
@@ -91,6 +92,19 @@ const Events = () => {
         }
     }
 
+
+    const Rsvp = ({event, rsvpCount, rsvp}) => {
+        const [clickRsvp, setClickRsvp] = useState(false)
+        const [alreadyRsvp, setAlreadyRSVP] = useState(rsvp.includes(user))
+        return (
+            <div>
+                <p style={{ margin: '10px' }}><button style={{marginRight: '5px', backgroundColor: `${alreadyRsvp && !clickRsvp || !alreadyRsvp && clickRsvp ? "goldenrod" : ""}`}} onClick={() => {updateRsvp({auth, event}); setClickRsvp(clickRsvp => !clickRsvp)
+                }}>RSVP</button>{clickRsvp && !alreadyRsvp ? (rsvpCount + 1 === 1 ? `${rsvpCount + 1} person has RSVP'd` : `${rsvpCount + 1} people have RSVP'd`) : (clickRsvp && alreadyRsvp ? (rsvpCount - 1 === 1 ? `${rsvpCount - 1} person has RSVP'd` : `${rsvpCount - 1} people have RSVP'd`) : (rsvpCount === 1 ? `${rsvpCount} person has RSVP'd` : `${rsvpCount} people have RSVP'd`))}.</p>
+            </div>
+        )
+    }
+
+
     return (
         <div>
             <div className='' >
@@ -106,7 +120,8 @@ const Events = () => {
                             <h5 style={{ margin: '10px'}}>{event.title}</h5>
                             <p style={{ margin: '10px'}}>{event.description}</p>
                             <h6 style={{ margin: '10px'}}>{event.date} at {DateTime.fromFormat(event.time, 'HH:mm:ss').toFormat('h:mm a')}</h6>
-                            <p style={{ margin: '10px' }}><button style={{marginRight: '5px'}}>RSVP</button>{event.rsvp_count} people have RSVP'd.</p>
+
+                            <Rsvp event={event.id} rsvpCount={event.rsvp_count} rsvp={event.rsvp}/>
                             <EditButton id={event.id}/>
                             <DeleteButton event={event.id}/>
                             <DeleteCheck event={event.id}/>
