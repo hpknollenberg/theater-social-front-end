@@ -84,7 +84,7 @@ const Polls = () => {
       {polls && polls.map((poll, index) => {
         if (!greyedOut.includes(poll.id) && admin !== true) {
           return (
-          <div key={index} style={{ margin: '10px', marginRight: '50px'}}>
+          <div key={index} style={{ margin: '10px', marginLeft: '25px'}}>
             <h5>{poll.name}</h5>
             {poll.choices && poll.choices.map((choice, index) => (
               <div key={index}>
@@ -99,7 +99,7 @@ const Polls = () => {
           </div>
       )} else {
         return (
-          <div key={index} style={{ margin: '10px', marginLeft: '50px'}}>
+          <div key={index} style={{ margin: '10px', marginLeft: '25px'}}>
             <h5>{poll.name}</h5>
             {poll.choices && poll.choices.map((choice, index) => (
               <div key={index}>
