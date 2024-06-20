@@ -14,6 +14,7 @@ const Events = () => {
     const [edit, setEdit] = useState(false)
     const [editId, setEditId] = useState(0)
     const {user, setUser} = useContext(UserContext)
+    const [toggle, setToggle] = useState(false)
     
     
     useEffect(() => {
@@ -22,7 +23,7 @@ const Events = () => {
             console.log(response)
             setEvents(response.data)
         })
-    }, [])
+    }, [toggle])
     
 
     const submitDelete = ({event}) => {
@@ -84,6 +85,25 @@ const Events = () => {
     }
 
 
+    const EventReminder = () => {
+        return (
+            <div style={{margin: "10px", borderStyle: "dashed", borderColor: "goldenrod", width: 'fit-content', maxWidth: "1000px"}}>
+                {events && events.map((event) => {
+                    if (event.rsvp.includes(user)) {
+                        return (
+                            <div>
+                                <hr />
+                                <h6 style={{margin: '10px'}}>You have RSVP'd to {event.title} on {event.date}.</h6>
+                                <hr />
+                            </div>
+                        )
+                    }
+                })}
+            </div>
+        )
+    }
+
+
     const Image = ({image}) => {
         if (image) {
             return (
@@ -98,7 +118,7 @@ const Events = () => {
         const [alreadyRsvp, setAlreadyRSVP] = useState(rsvp.includes(user))
         return (
             <div>
-                <p style={{ margin: '10px' }}><button style={{marginRight: '5px', backgroundColor: `${alreadyRsvp && !clickRsvp || !alreadyRsvp && clickRsvp ? "goldenrod" : ""}`}} onClick={() => {updateRsvp({auth, event}).then(()=> setClickRsvp(clickRsvp => !clickRsvp))}}>RSVP</button>{clickRsvp && !alreadyRsvp ? (rsvpCount + 1 === 1 ? `${rsvpCount + 1} person has RSVP'd` : `${rsvpCount + 1} people have RSVP'd`) : (clickRsvp && alreadyRsvp ? (rsvpCount - 1 === 1 ? `${rsvpCount - 1} person has RSVP'd` : `${rsvpCount - 1} people have RSVP'd`) : (rsvpCount === 1 ? `${rsvpCount} person has RSVP'd` : `${rsvpCount} people have RSVP'd`))}.</p>
+                <p style={{ margin: '10px' }}><button style={{marginRight: '5px', backgroundColor: `${alreadyRsvp && !clickRsvp || !alreadyRsvp && clickRsvp ? "goldenrod" : ""}`}} onClick={() => {updateRsvp({auth, event}).then(()=> {setClickRsvp(clickRsvp => !clickRsvp); setToggle(toggle => !toggle)})}}>RSVP</button>{clickRsvp && !alreadyRsvp ? (rsvpCount + 1 === 1 ? `${rsvpCount + 1} person has RSVP'd` : `${rsvpCount + 1} people have RSVP'd`) : (clickRsvp && alreadyRsvp ? (rsvpCount - 1 === 1 ? `${rsvpCount - 1} person has RSVP'd` : `${rsvpCount - 1} people have RSVP'd`) : (rsvpCount === 1 ? `${rsvpCount} person has RSVP'd` : `${rsvpCount} people have RSVP'd`))}.</p>
             </div>
         )
     }
@@ -111,10 +131,11 @@ const Events = () => {
                 <Tabs activeTab="events" />
             </div>
             <EventsUpload />
+            <EventReminder />
             <div className="d-flex flex-wrap align-items-start">
                 {events && events.map(event => {
                     return (
-                        <div style={{ borderStyle: "dashed", borderColor: "goldenrod", margin: "10px", maxWidth: "350px"}}>
+                        <div key={event.id} style={{ borderStyle: "dashed", borderColor: "goldenrod", margin: "10px", maxWidth: "350px"}}>
                             <Image image={event.image} />
                             <h5 style={{ margin: '10px'}}>{event.title}</h5>
                             <p style={{ margin: '10px'}}>{event.description}</p>
