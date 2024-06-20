@@ -43,6 +43,26 @@ export const createDiscussion = ({auth, user, admin, title, description, image})
 }
 
 
+export const createEvent = ({ auth, admin, title, description, date, time, image }) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-event/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      is_admin: admin,
+      title: title,
+      description: description,
+      date: date,
+      time: time,
+      image: image
+    }
+  })
+}
+
+
 export const createFilm = ({ auth, user, admin, filmDate, filmName, filmImage }) => {
   return axios({
     method: 'post',
@@ -206,6 +226,21 @@ export const deleteDiscussion = ({ auth, user, admin, discussion }) => {
 }
 
 
+export const deleteEvent = ({ auth, admin, event}) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-event/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      is_admin: admin,
+      event: event
+    }
+  })
+}
+
+
 export const deleteFilm = ({ auth, user, admin, id }) => {
   return axios({
     method: 'delete',
@@ -303,6 +338,27 @@ export const deleteShowtimesDay = ({ auth, admin, day}) => {
 }
 
 
+export const editEvent = ({ auth, admin, id, editTitle, editDescription, editDate, editTime, editImage}) => {
+    return axios({
+      method: 'put',
+      url: `${baseUrl}/edit-event/`,
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      data: {
+        is_admin: admin,
+        event: id,
+        title: editTitle,
+        description: editDescription,
+        date: editDate,
+        time: editTime,
+        image: editImage
+      }
+    })
+}
+
+
 export const editFilm = ({ auth, user, admin, id, editFilmName, editDate, editFilmImage}) => {
   return axios({
     method: 'put',
@@ -393,6 +449,17 @@ export const getDiscussions = ({ auth }) => {
   return axios({
     method: 'get',
     url: `${baseUrl}/get-discussions`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
+export const getEvents = ({ auth }) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-events`,
     headers: {
       Authorization: `Bearer ${auth.accessToken}`
     }
