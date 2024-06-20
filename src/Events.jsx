@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import Tabs from "./Tabs"
 import { baseUrl, deleteEvent, editEvent, getEvents, updateRsvp } from "./api"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import EventsUpload from "./EventsUpload"
 import { DateTime } from "luxon"
 
@@ -15,6 +15,7 @@ const Events = () => {
     const [editId, setEditId] = useState(0)
     const {user, setUser} = useContext(UserContext)
     const [toggle, setToggle] = useState(false)
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
     
     
     useEffect(() => {
@@ -23,12 +24,13 @@ const Events = () => {
             console.log(response)
             setEvents(response.data)
         })
-    }, [toggle])
+    }, [toggle, universalToggle])
     
 
     const submitDelete = ({event}) => {
         if (deleteCheck === true && deleteId === event) {
             deleteEvent({auth, admin, event})
+            .then(() => setUniversalToggle(universalToggle => !universalToggle))
         }
         setDeleteCheck(deleteCheck => !deleteCheck)
     }
@@ -78,7 +80,7 @@ const Events = () => {
                     <p style={{margin: '10px'}}>Date: <input placeholder="YYYY-MM-DD" style={{marginLeft: '5px' }} onChange={e => setEditDate(e.target.value)} value={editDate}/></p>
                     <p style={{margin: '10px'}}>Time: <input placeholder="H:mm AM/PM" style={{marginLeft: '5px' }} onChange={e => setEditTime(e.target.value)} value={editTime}/></p>
                     <input style={{ margin: '10px' }} type="file" accept='image/*' onChange={e => setEditImage(e.target.files[0])}/>
-                    <button style={{ margin: '10px'}} onClick={() => {editEvent({auth, admin, id, editTitle, editDescription, editDate, editTime, editImage})}}>Submit Edit</button>
+                    <button style={{ margin: '10px'}} onClick={() => {editEvent({auth, admin, id, editTitle, editDescription, editDate, editTime, editImage}).then(() => setUniversalToggle(universalToggle => !universalToggle))}}>Submit Edit</button>
                 </div>
             )
         }

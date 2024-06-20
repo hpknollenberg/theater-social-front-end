@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { AdminContext, AuthContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext } from "./context"
 import { createEvent } from "./api"
 
 
@@ -11,6 +11,7 @@ const EventsUpload = () => {
     const [date, setDate] = useState("")
     const [time, setTime] = useState("")
     const [image, setImage] = useState("")
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
     const submitEvent = () => {
@@ -23,7 +24,7 @@ const EventsUpload = () => {
             time,
             image
         })
-        .then(response => console.log(response))
+        .then(response => setUniversalToggle(universalToggle => !universalToggle))
     }
 
     if (admin === true) {
