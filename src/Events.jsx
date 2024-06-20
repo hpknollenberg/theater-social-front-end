@@ -140,7 +140,6 @@ const Events = () => {
                             <h5 style={{ margin: '10px'}}>{event.title}</h5>
                             <p style={{ margin: '10px'}}>{event.description}</p>
                             <h6 style={{ margin: '10px'}}>{event.date} at {DateTime.fromFormat(event.time, 'HH:mm:ss').toFormat('h:mm a')}</h6>
-
                             <Rsvp event={event.id} rsvpCount={event.rsvp_count} rsvp={event.rsvp}/>
                             <EditButton id={event.id}/>
                             <DeleteButton event={event.id}/>

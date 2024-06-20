@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import Tabs from "./Tabs"
 import { deleteShowtime, deleteShowtimesDay, getShowtimes } from "./api"
-import { AdminContext, AuthContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext } from "./context"
 import ShowtimesUpload from "./ShowtimesUpload"
 import { DateTime } from "luxon"
 
@@ -16,6 +16,7 @@ const Showtimes = () => {
   const [deleteId, setDeleteId] = useState(0)
   const [deleteDayCheck, setDeleteDayCheck] = useState(false)
   const [deleteDay, setDeleteDay] = useState("")
+  const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
   useEffect(() => {
     getShowtimes({auth})
@@ -30,12 +31,13 @@ const Showtimes = () => {
         }
     })
     })
-  }, [])
+  }, [universalToggle])
 
 
   const submitDelete = ({id}) => {
     if (deleteCheck === true && deleteId === id) {
       deleteShowtime({auth, admin, id})
+      .then(() => setUniversalToggle(universalToggle => !universalToggle))
     } 
     setDeleteCheck(deleteCheck => !deleteCheck)
   }

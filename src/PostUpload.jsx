@@ -1,5 +1,5 @@
 import { createPost } from "./api"
-import { AdminContext, AuthContext, UserContext } from "./context"
+import { AdminContext, AuthContext, ToggleContext, UserContext } from "./context"
 import { useContext, useState } from "react"
 
 
@@ -9,6 +9,7 @@ const PostUpload = () => {
     const {admin, setAdmin } = useContext(AdminContext)
     const [postMessage, setPostMessage] = useState("")
     const [postImage, setPostImage] = useState("")
+    const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
     const submitPost = () => {
@@ -18,6 +19,9 @@ const PostUpload = () => {
             admin,
             postMessage,
             postImage
+        })
+        .then(response => {
+            setUniversalToggle(universalToggle => !universalToggle)
         })
     }
 
