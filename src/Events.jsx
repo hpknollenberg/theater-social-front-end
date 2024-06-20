@@ -98,8 +98,7 @@ const Events = () => {
         const [alreadyRsvp, setAlreadyRSVP] = useState(rsvp.includes(user))
         return (
             <div>
-                <p style={{ margin: '10px' }}><button style={{marginRight: '5px', backgroundColor: `${alreadyRsvp && !clickRsvp || !alreadyRsvp && clickRsvp ? "goldenrod" : ""}`}} onClick={() => {updateRsvp({auth, event}); setClickRsvp(clickRsvp => !clickRsvp)
-                }}>RSVP</button>{clickRsvp && !alreadyRsvp ? (rsvpCount + 1 === 1 ? `${rsvpCount + 1} person has RSVP'd` : `${rsvpCount + 1} people have RSVP'd`) : (clickRsvp && alreadyRsvp ? (rsvpCount - 1 === 1 ? `${rsvpCount - 1} person has RSVP'd` : `${rsvpCount - 1} people have RSVP'd`) : (rsvpCount === 1 ? `${rsvpCount} person has RSVP'd` : `${rsvpCount} people have RSVP'd`))}.</p>
+                <p style={{ margin: '10px' }}><button style={{marginRight: '5px', backgroundColor: `${alreadyRsvp && !clickRsvp || !alreadyRsvp && clickRsvp ? "goldenrod" : ""}`}} onClick={() => {updateRsvp({auth, event}).then(()=> setClickRsvp(clickRsvp => !clickRsvp))}}>RSVP</button>{clickRsvp && !alreadyRsvp ? (rsvpCount + 1 === 1 ? `${rsvpCount + 1} person has RSVP'd` : `${rsvpCount + 1} people have RSVP'd`) : (clickRsvp && alreadyRsvp ? (rsvpCount - 1 === 1 ? `${rsvpCount - 1} person has RSVP'd` : `${rsvpCount - 1} people have RSVP'd`) : (rsvpCount === 1 ? `${rsvpCount} person has RSVP'd` : `${rsvpCount} people have RSVP'd`))}.</p>
             </div>
         )
     }
@@ -112,7 +111,7 @@ const Events = () => {
                 <Tabs activeTab="events" />
             </div>
             <EventsUpload />
-            <div>
+            <div className="d-flex flex-wrap align-items-start">
                 {events && events.map(event => {
                     return (
                         <div style={{ borderStyle: "dashed", borderColor: "goldenrod", margin: "10px", maxWidth: "350px"}}>

@@ -101,13 +101,8 @@ const Discussion = () => {
 
 
     const submitComment = ({discussion, content}) => {
-        createComment({ auth, user, content, discussion })
+        return createComment({ auth, user, content, discussion })
         .then(() => setToggle(toggle => !toggle))
-    }
-
-
-    const submitLike = (comment) => {
-        updateCommentLikes({ auth, comment })
     }
 
 
@@ -135,7 +130,7 @@ const Discussion = () => {
                                 <div key={comment.id}>
                                     <h6>{comment.author.first_name}</h6>
                                     <p>{comment.content}</p>
-                                    <p><button onClick={() => {submitLike(comment.id); setLiked(liked => !liked)}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`, marginRight: '5px'}}>Like</button> 
+                                    <p><button onClick={() => {updateCommentLikes({auth, comment:comment.id}).then(() => setLiked(liked => !liked))}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`, marginRight: '5px'}}>Like</button> 
                                     Likes: {liked && !alreadyLiked ? comment.likes_count + 1 : (liked && alreadyLiked ? comment.likes_count - 1 : comment.likes_count)}</p>
                                     <DeleteCommentButton comment={comment.id} author={comment.author.id} />
                                     <DeleteCommentCheck comment={comment.id}/>

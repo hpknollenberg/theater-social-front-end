@@ -100,7 +100,7 @@ const Posts = () => {
         const [alreadyLiked, setAlreadyLiked] = useState(postObject.likes.includes(user) ? true : false)
         return (
             <div>
-                <button style={{margin: "10px", backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}} onClick={() => {updateLikes({auth, post}); setLiked(liked => !liked)}} >Like</button>
+                <button style={{margin: "10px", backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`}} onClick={() => {updateLikes({auth, post}).then(() => setLiked(liked => !liked))}} >Like</button>
                 Likes: {liked && !alreadyLiked ? likesCount + 1 : (liked && alreadyLiked ? likesCount - 1 : likesCount)}
             </div>
         )
