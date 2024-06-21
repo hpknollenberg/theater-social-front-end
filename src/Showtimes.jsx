@@ -81,6 +81,12 @@ const Showtimes = () => {
   }
 
 
+  const formatDate = (date) => {
+    let dateArray = date.split("-")
+    return dateArray[1] + "/" + dateArray[2] + "/" + dateArray[0]
+  }
+
+
 
   return (
     <div>
@@ -92,7 +98,7 @@ const Showtimes = () => {
       <div className="m-2">
         {dates && dates.map((date) => {
           return (
-              <button style={{ margin: '5px', backgroundColor: `${date === showtimeDate ? "goldenrod" : "white"}`}} onClick={() => setShowtimeDate(() => date)}>{date}</button>
+              <button style={{ margin: '5px', backgroundColor: `${date === showtimeDate ? "goldenrod" : "white"}`}} onClick={() => setShowtimeDate(() => date)}>{formatDate(date)}</button>
           )
         })}
       </div>
