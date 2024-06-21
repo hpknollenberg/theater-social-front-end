@@ -87,6 +87,12 @@ const Events = () => {
     }
 
 
+    const formatDate = (date) => {
+        let dateArray = date.split("-")
+        return dateArray[1] + "/" + dateArray[2] + "/" + dateArray[0]
+      }
+
+
     const EventReminder = () => {
         events.forEach((event, index) => {
             if (index === 0 && userRsvp) {
@@ -105,7 +111,7 @@ const Events = () => {
                             return (
                                 <div key={event.id}>
                                     <hr />
-                                    <h6 style={{margin: '10px'}}>You have RSVP'd to {event.title} on {event.date}.</h6>
+                                    <h6 style={{margin: '10px'}}>You have RSVP'd to {event.title} on {formatDate(event.date)}.</h6>
                                     <hr />
                                 </div>
                             )
@@ -152,7 +158,7 @@ const Events = () => {
                             <Image image={event.image} />
                             <h5 style={{ margin: '10px'}}>{event.title}</h5>
                             <p style={{ margin: '10px'}}>{event.description}</p>
-                            <h6 style={{ margin: '10px'}}>{event.date} at {DateTime.fromFormat(event.time, 'HH:mm:ss').toFormat('h:mm a')}</h6>
+                            <h6 style={{ margin: '10px'}}>{formatDate(event.date)} at {DateTime.fromFormat(event.time, 'HH:mm:ss').toFormat('h:mm a')}</h6>
                             <Rsvp event={event.id} rsvpCount={event.rsvp_count} rsvp={event.rsvp}/>
                             <EditButton id={event.id}/>
                             <DeleteButton event={event.id}/>
