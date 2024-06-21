@@ -105,9 +105,9 @@ const UpcomingFilms = () => {
         <Tabs activeTab="upcomingfilms"/>
       </div>
       <UpcomingFilmsUpload />
-      <div className="d-lg-flex align-items-center">
+      <div className="d-flex align-items-center flex-wrap">
         {films && films.map(film => (
-          <div key={film.id} className="" style={{ borderColor: "goldenrod", borderStyle: "dashed", margin: "10px", marginRight: "50px", maxWidth: "300px"}}>
+          <div key={film.id} style={{ borderColor: "goldenrod", borderStyle: "dashed", margin: "10px", marginRight: "50px", width: "375px"}}>
               <img src={`${baseUrl}${film.image}`} style={{ maxWidth: "97%", maxHeight: "90%", margin: "5px"}}/>
               <h5 className="d-flex justify-content-center"> {film.title}</h5>
               <p className="d-flex justify-content-center">Coming {film.release_date}</p>

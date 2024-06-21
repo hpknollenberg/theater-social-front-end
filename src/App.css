@@ -1,6 +1,13 @@
-body {
+#page-content {
   background-color: maroon;
   color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 85vh;
+}
+
+.footer {
+  margin-top: auto;
 }
 
 h1, h2, h3, h5, h6 {
@@ -14,3 +21,6 @@ hr {
   border-color: goldenrod;
   border-width: 2px;
 }
+
+
+
