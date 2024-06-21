@@ -33,6 +33,7 @@ function Login() {
         <input
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={((e) => e.key === 'Enter' && submit())}
           value={password}
         />
       </div>
