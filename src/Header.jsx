@@ -18,7 +18,7 @@ function Header() {
 
 
   return (
-    <div style={{ padding: '10px', backgroundColor: 'black'}} className="d-flex justify-content-between">
+    <div style={{ padding: '10px', color: 'white', backgroundColor: 'black'}} className="d-flex justify-content-between">
       <Link style={{ marginRight: 20, color: "white" }} to='/login' onClick={() => {submit()}}>Logout</Link>
       <div style={{ fontWeight: 'bold' }}>Cinema Social</div>
     </div>
