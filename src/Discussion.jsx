@@ -42,7 +42,7 @@ const Discussion = () => {
     const submitDeleteDiscussion = ({discussion}) => {
         if (deleteCheck === true && deleteId === discussion) {
             deleteDiscussion({auth, user, admin, discussion})
-            setDiscussionToggle(discussionToggle => !discussionToggle)
+            .then(() => setDiscussionToggle(discussionToggle => !discussionToggle))
         }
         setDeleteCheck(deleteCheck => !deleteCheck)
         
@@ -73,7 +73,7 @@ const Discussion = () => {
     const submitDeleteComment = ({comment}) => {
         if (deleteCommentCheck === true && deleteCommentId === comment) {
             deleteComment({auth, user, comment})
-            setToggle(toggle => !toggle)
+            .then(() => setToggle(toggle => !toggle))
         }
         setDeleteCommentCheck(deleteCommentCheck => !deleteCommentCheck)
         
@@ -83,7 +83,7 @@ const Discussion = () => {
     const DeleteCommentCheck = ({comment}) => {
         if (deleteCommentCheck === true && deleteCommentId === comment) {
             return (
-                <p>Are you sure you want to delete?</p>
+                <p>Are you sure you want to delete this comment?</p>
             )
         }
     }
@@ -94,7 +94,7 @@ const Discussion = () => {
             return (
                 <div style={{ marginTop: '10px' }}>   
                     <button style={{backgroundColor: 'red' }} onClick={() => {submitDeleteComment({comment}); setDeleteCommentId(comment)}}>Delete Comment</button>
-                    <DeleteCheck id={comment}/>
+                    <DeleteCommentCheck comment={comment}/>
                 </div>
             )
         }
@@ -134,7 +134,6 @@ const Discussion = () => {
                                     <p><button onClick={() => {updateCommentLikes({auth, comment:comment.id}).then(() => setLiked(liked => !liked))}} style={{ backgroundColor: `${alreadyLiked && !liked || !alreadyLiked && liked ? "goldenrod" : ""}`, marginRight: '5px'}}>Like</button> 
                                     Likes: {liked && !alreadyLiked ? comment.likes_count + 1 : (liked && alreadyLiked ? comment.likes_count - 1 : comment.likes_count)}</p>
                                     <DeleteCommentButton comment={comment.id} author={comment.author.id} />
-                                    <DeleteCommentCheck comment={comment.id}/>
                                     <hr></hr>
                                 </div>
                             )
@@ -156,7 +155,7 @@ const Discussion = () => {
             <div>
                 {discussions && discussions.map((discussion) => {
                     return (
-                        <div style={{ margin: '10px', marginBottom: "25px", borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px'}}>
+                        <div key={discussion.id} style={{ margin: '10px', marginBottom: "25px", borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px'}}>
                             <div style={{ display: "flex", alignItems: "center", margin: '10px'}}>
                                 <img src={`${baseUrl}${discussion.image}`} style={{maxHeight: '200px'}} />
                                 <div style={{ margin: '10px' }}>
