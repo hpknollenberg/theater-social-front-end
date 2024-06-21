@@ -16,7 +16,7 @@ const Events = () => {
     const {user, setUser} = useContext(UserContext)
     const [toggle, setToggle] = useState(false)
     const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
-    
+    const [userRsvp, setUserRsvp] = useState(false)
     
     useEffect(() => {
         getEvents({auth})
@@ -88,21 +88,32 @@ const Events = () => {
 
 
     const EventReminder = () => {
-        return (
-            <div style={{margin: "10px", borderStyle: "dashed", borderColor: "goldenrod", width: 'fit-content', maxWidth: "1000px"}}>
-                {events && events.map((event) => {
-                    if (event.rsvp.includes(user)) {
-                        return (
-                            <div>
-                                <hr />
-                                <h6 style={{margin: '10px'}}>You have RSVP'd to {event.title} on {event.date}.</h6>
-                                <hr />
-                            </div>
-                        )
-                    }
-                })}
-            </div>
-        )
+        events.forEach((event, index) => {
+            if (index === 0 && userRsvp) {
+                setUserRsvp(() => false)
+            }
+            if (event.rsvp.includes(user)) {
+                setUserRsvp(() => true)
+            }
+        })
+
+        if (userRsvp === true) { 
+            return (
+                <div style={{margin: "10px", borderStyle: "dashed", borderColor: "goldenrod", width: 'fit-content', maxWidth: "1000px"}}>
+                    {events && events.map((event) => {
+                        if (event.rsvp.includes(user)) {
+                            return (
+                                <div key={event.id}>
+                                    <hr />
+                                    <h6 style={{margin: '10px'}}>You have RSVP'd to {event.title} on {event.date}.</h6>
+                                    <hr />
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
+            )
+        }
     }
 
 
