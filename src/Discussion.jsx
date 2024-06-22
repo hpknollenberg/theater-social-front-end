@@ -17,8 +17,7 @@ const Discussion = () => {
     const [discussionToggle, setDiscussionToggle] = useState(false)
     const [openId, setOpenId] = useState(0)
     const [deleteId, setDeleteId] = useState(0)
-    const [deleteCommentId, setDeleteCommentId] = useState(0)
-    const [deleteCommentCheck, setDeleteCommentCheck] = useState(false)
+    
     const {universalToggle, setUniversalToggle} = useContext(ToggleContext)
 
 
@@ -70,7 +69,7 @@ const Discussion = () => {
     }
 
 
-    const submitDeleteComment = ({comment}) => {
+    const submitDeleteComment = ({comment, deleteCommentId, deleteCommentCheck, setDeleteCommentCheck}) => {
         if (deleteCommentCheck === true && deleteCommentId === comment) {
             deleteComment({auth, user, comment})
             .then(() => setToggle(toggle => !toggle))
@@ -80,7 +79,7 @@ const Discussion = () => {
     }
 
 
-    const DeleteCommentCheck = ({comment}) => {
+    const DeleteCommentCheck = ({comment, deleteCommentCheck, deleteCommentId}) => {
         if (deleteCommentCheck === true && deleteCommentId === comment) {
             return (
                 <p>Are you sure you want to delete this comment?</p>
@@ -90,11 +89,14 @@ const Discussion = () => {
 
 
     const DeleteCommentButton = ({comment, author}) => {
+        const [deleteCommentId, setDeleteCommentId] = useState(0)
+        const [deleteCommentCheck, setDeleteCommentCheck] = useState(false)
+
         if (admin === true || user === author) {
             return (
                 <div style={{ marginTop: '10px' }}>   
-                    <button style={{backgroundColor: 'red' }} onClick={() => {submitDeleteComment({comment}); setDeleteCommentId(comment)}}>Delete Comment</button>
-                    <DeleteCommentCheck comment={comment}/>
+                    <button style={{backgroundColor: 'red' }} onClick={() => {submitDeleteComment({comment, deleteCommentId, deleteCommentCheck, setDeleteCommentCheck}); setDeleteCommentId(comment)}}>Delete Comment</button>
+                    <DeleteCommentCheck comment={comment} deleteCommentCheck={deleteCommentCheck} deleteCommentId={deleteCommentId}/>
                 </div>
             )
         }
