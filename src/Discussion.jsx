@@ -114,7 +114,7 @@ const Discussion = () => {
 
         return (
             <div style={{ margin: '10px' }}>
-                <textarea style={{width: '300px', height: '100px'}} onChange={e => setContent(e.target.value)}></textarea>
+                <textarea style={{width: '300px', height: '100px'}} placeholder="Add a message to the discussion..." onChange={e => setContent(e.target.value)}></textarea>
                 <button style={{ margin: '10px'}} onClick={() => submitComment({discussion, content})}>Send Message</button>
             </div>
         )
@@ -125,7 +125,7 @@ const Discussion = () => {
         if (open === true && discussion === openId) {
             return (
                 <div>
-                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: '10px', borderStyle: 'dashed', borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "scroll"}} >
+                    <div style={{ display: "flex", flexDirection: 'column-reverse', margin: `${comments.filter(x => x.discussion.id === discussion).length > 0 ? '10px' : ""}` , borderStyle: `${comments.filter(x => x.discussion.id === discussion).length > 0 ? "dashed" : ""}`, borderColor: 'goldenrod', padding: '10px', maxHeight: '400px', overflowY: "auto"}} >
                         {comments && comments.filter(x => x.discussion.id === discussion).map(comment => {
                             const [alreadyLiked, setAlreadyLiked] = useState(comment.likes.includes(user) ? true : false)
                             const [liked, setLiked] = useState(false)
