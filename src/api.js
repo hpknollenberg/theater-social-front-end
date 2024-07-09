@@ -159,6 +159,22 @@ export const createShowtime = ({ auth, admin, showtimes, date, film, id, timeIds
 }
 
 
+export const createThreadComment = ({auth, user, threadContent, comment}) => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/create-thread-comment/`,
+    headers: { 
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      author: user,
+      content: threadContent,
+      comment: comment
+    }
+  })
+}
+
+
 export const createUser = ({ username, password, firstName, lastName}) => {
     return axios({
       method: 'post',
@@ -333,6 +349,21 @@ export const deleteShowtimesDay = ({ auth, admin, day}) => {
     data: {
       is_admin: admin,
       day: day
+    }
+  })
+}
+
+
+export const deleteThreadComment = ({auth, user, threadComment}) => {
+  return axios({
+    method: 'delete',
+    url: `${baseUrl}/delete-thread-comment/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`,
+    },
+    data: {
+      id: threadComment,
+      author: user
     }
   })
 }
@@ -535,6 +566,17 @@ export const getShowtimes = ({auth}) => {
 }
 
 
+export const getThreadComments = ({auth}) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/get-thread-comments`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    }
+  })
+}
+
+
 export const getToken = ({ auth, username, password }) => {
   return axios.post(`${baseUrl}/token/`, {
     username: username,
@@ -587,6 +629,20 @@ export const updateRsvp = ({ auth, event }) => {
     },
     data: {
       event
+    }
+  })
+}
+
+
+export const updateThreadCommentLikes = ({ auth, threadComment }) => {
+  return axios({
+    method: 'put',
+    url: `${baseUrl}/update-thread-comment-likes/`,
+    headers: {
+      Authorization: `Bearer ${auth.accessToken}`
+    },
+    data: {
+      thread_comment: threadComment
     }
   })
 }
